@@ -35,12 +35,8 @@ const Body = () => {
   };
 
   useEffect(() => {
-    if (difficultyLevel === "All") {
-      setFilterProblems(problems);
-    } else {
-      const data = filterData(searchTxt, difficultyLevel, problems);
-      setFilterProblems(data);
-    }
+    const data = filterData(searchTxt, difficultyLevel, problems);
+    setFilterProblems(data);
   }, [searchTxt, difficultyLevel, problems]);
 
   return (
@@ -55,16 +51,7 @@ const Body = () => {
           setSearchTxt(e.target.value);
         }}
       />
-      <button
-        className="search-btn"
-        onClick={() => {
-          const data = filterData(searchTxt,difficultyLevel,problems);
-          setFilterProblems(data);
-        }}
-      >
-        Search
-      </button>
-
+      
       <select
         value={difficultyLevel}
         onChange={(e) => setDifficultyLevel(e.target.value)}
