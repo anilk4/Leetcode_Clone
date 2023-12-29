@@ -3,6 +3,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const problemsRouter = require("./routes/problems")
+var cors = require('cors')
+
+app.use(cors()); 
+
 
 // Middleware for parsing request bodies
 app.use(bodyParser.json());
