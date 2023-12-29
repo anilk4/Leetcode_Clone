@@ -52,6 +52,7 @@ const Body = () => {
         }}
       />
       
+      <label>Difficulty Level: 
       <select
         value={difficultyLevel}
         onChange={(e) => setDifficultyLevel(e.target.value)}
@@ -62,7 +63,7 @@ const Body = () => {
         <option value="Medium">Medium</option>
         <option value="Hard">Hard</option>
       </select>
-
+      </label>
       <table className="custom-table">
         <thead>
           <tr>
