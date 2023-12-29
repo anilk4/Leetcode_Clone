@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ProblemCard from "./ProblemCard";
+import { HomeCarousel } from "./HomeCarousel/HomeCarousel";
 
 const filterData = (searchTxt, problems) => {
   return problems.filter((prob) =>
@@ -30,6 +31,7 @@ const Body = () => {
 
   return (
     <div className="Allproblems">
+      <HomeCarousel/>
       <input
         type="text"
         placeholder="Search Problem"
