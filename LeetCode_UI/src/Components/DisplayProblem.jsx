@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import LeftPanel from "./LeftPanel";
+import RightPanel from "./RightPanel";
 
 const Display = () => {
   const { id } = useParams();
@@ -25,6 +26,7 @@ const Display = () => {
     <div>
       <div className="display">
         <LeftPanel data={Data}></LeftPanel>
+        <RightPanel />
       </div>
     </div>
   );

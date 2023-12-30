@@ -1,3 +1,4 @@
+// LeftPanel.jsx
 import React from 'react';
 
 function LeftPanel({ data }) {
@@ -15,10 +16,9 @@ function LeftPanel({ data }) {
       </React.Fragment>
     ));
   };
-  
 
   return (
-    <div>
+    <div className="left-panel">
       <h1>{data.title}</h1>
       <div>{renderDescription(data.description)}</div>
 
