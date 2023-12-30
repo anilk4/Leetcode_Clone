@@ -6,6 +6,7 @@ import Favourites from './Components/Favourites';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Body from './Components/Body';
+import Display from './Components/DisplayProblem';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path='/profile' element={<Profile />} />
         <Route path='/discuss' element={<Discuss />} />
         <Route path='/favourite' element={<Favourites />} />
+        <Route path='/display/:id' element={<Display />} />
         <Route path='*' element={<Error />} />
       </Routes>
       <Footer />

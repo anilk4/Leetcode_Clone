@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ProblemCard from "./ProblemCard";
 import { HomeCarousel } from "./HomeCarousel/HomeCarousel";
+import Display from "./DisplayProblem";
+import { Link } from "react-router-dom";
 
 
 
@@ -73,9 +75,11 @@ const Body = () => {
             <th>Difficulty</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody>  
           {filterProblems.map((problem) => (
+            <Link to={`/display/${problem.id}`} key={problem._id}>
             <ProblemCard {...problem} key={problem._id} />
+            </Link>
           ))}
         </tbody>
       </table>
