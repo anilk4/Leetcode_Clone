@@ -14,19 +14,16 @@ const Display = () => {
     const selectedProblem = Problems.find(
       (problem) => problem.id === parseInt(id, 10)
     );
-    
     setData(selectedProblem);
   }
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [id]);
 
   return (
     <div>
-      {console.log("Data ", Data)}
       <div className="display">
-        <h1>Id: {id}</h1>
         <LeftPanel data={Data}></LeftPanel>
       </div>
     </div>
