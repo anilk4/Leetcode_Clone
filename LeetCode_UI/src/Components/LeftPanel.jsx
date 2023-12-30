@@ -2,7 +2,12 @@ import React from 'react';
 
 function LeftPanel({ data }) {
   console.log(data);
+  
   const renderDescription = (description) => {
+    if (!description) {
+      return null;
+    }
+  
     return description.split('\n').map((line, index) => (
       <React.Fragment key={index}>
         {line}
@@ -10,6 +15,7 @@ function LeftPanel({ data }) {
       </React.Fragment>
     ));
   };
+  
 
   return (
     <div>

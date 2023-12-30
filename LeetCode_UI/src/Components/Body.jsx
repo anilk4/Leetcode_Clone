@@ -77,7 +77,7 @@ const Body = () => {
         </thead>
         <tbody>  
           {filterProblems.map((problem) => (
-            <Link to={`/display/${problem.id}`} key={problem._id}>
+            <Link to={`/display/${problem.id}`}>
             <ProblemCard {...problem} key={problem._id} />
             </Link>
           ))}
