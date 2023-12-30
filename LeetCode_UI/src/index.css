@@ -58,3 +58,47 @@
     color: red;
   }
   
+  /* App Container */
+body {
+  font-family: 'Arial', sans-serif;
+  display: flex;
+}
+
+/* Left Panel Styles */
+.left-panel {
+  width: 300px;
+  padding: 20px;
+  background-color: #f0f0f0;
+}
+
+.left-panel h1 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.left-panel div {
+  margin-bottom: 15px;
+}
+
+.left-panel strong {
+  font-weight: bold;
+}
+/* Add this to your CSS file */
+
+.container {
+  display: flex;
+  width: 100%;
+}
+
+.left-panel {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.right-panel {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+}
