@@ -37,16 +37,6 @@ function LeftPanel({ data }) {
       <div>
         <strong>Related Topics:</strong> {data.related_topics}
       </div>
-
-      <div>
-        <strong>Constraints:</strong>
-        <ul>
-          <li>{`2 <= nums.length <= 103`}</li>
-          <li>{`-109 <= nums[i] <= 109`}</li>
-          <li>{`-109 <= target <= 109`}</li>
-          {/* Add more constraints as needed */}
-        </ul>
-      </div>
     </div>
   );
 }
