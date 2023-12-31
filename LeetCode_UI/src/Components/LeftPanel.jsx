@@ -3,12 +3,12 @@ import React from 'react';
 
 function LeftPanel({ data }) {
   console.log(data);
-  
+
   const renderDescription = (description) => {
     if (!description) {
       return null;
     }
-  
+
     return description.split('\n').map((line, index) => (
       <React.Fragment key={index}>
         {line}
@@ -18,7 +18,7 @@ function LeftPanel({ data }) {
   };
 
   return (
-    <div className="left-panel">
+    <div /* className="left-panel" */ className="bg-light p-3">
       <h1>{data.title}</h1>
       <div>{renderDescription(data.description)}</div>
 

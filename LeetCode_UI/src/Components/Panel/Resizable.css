@@ -1,0 +1,24 @@
+/* ResizableColumns.css */
+.resizable-column {
+    border-right: 1px solid #ccc; /* Example border color */
+  }
+  
+  .react-resizable {
+    position: relative;
+  }
+  
+  .react-resizable-handle {
+    position: absolute;
+    width: 10px;
+    height: 100%;
+    right: 0;
+    bottom: 0;
+    cursor: col-resize;
+    background: #eee; /* Example handle color */
+  }
+  
+  /* Add this CSS to your stylesheet or component style block */
+.text-primary-hover:hover {
+    color: #007bff; /* Bootstrap's primary color for the hover effect */
+  }
+  
