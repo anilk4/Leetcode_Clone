@@ -7,10 +7,10 @@ import "ace-builds/src-noconflict/ext-language_tools";
 function RightPanel() {
   const code = "var message = 'Monaco Editor!' \nconsole.log(message);";
   return (
-    <div className="right-panel">
+    <div /* className="right-panel" */ className="bg-dark text-light p-3 h-100">
       <AceEditor
         className="ace-editor"
-        height="300px"
+        height="100%"
         width="100%"
         value={code}
         mode="javascript"
