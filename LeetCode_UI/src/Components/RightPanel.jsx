@@ -3,7 +3,7 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/ext-language_tools";
-import Compiler from "./Compiler/Compiler";
+import Compiler from "./Compiler";
 
 function RightPanel() {
   // const code = "var message = 'Monaco Editor!' \nconsole.log(message);";
