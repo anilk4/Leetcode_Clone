@@ -1,0 +1,111 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Added styles for the Code Compiler section */
+h2 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.ace-editor {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+button {
+  background-color: #61dafb;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #46a5d1;
+}
+
+p {
+  color: #333;
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+/* Styles for the result section */
+p.status {
+  color: #333;
+  font-weight: bold;
+}
+
+p.job-id {
+  color: #888;
+  margin-top: 0.5rem;
+}
+
+p.result {
+  white-space: pre-line;
+  margin-top: 1rem;
+  font-family: monospace;
+  font-size: 1rem;
+}
+/* ... (previous styles) */
+
+.ace-editor {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  height: 600px;
+  width: 800px; /* Adjust the height as needed */
+}
+
+/* ... (remaining styles) */
