@@ -3,12 +3,14 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/ext-language_tools";
+import Compiler from "./Compiler/Compiler";
 
 function RightPanel() {
-  const code = "var message = 'Monaco Editor!' \nconsole.log(message);";
+  // const code = "var message = 'Monaco Editor!' \nconsole.log(message);";
   return (
     <div /* className="right-panel" */ className="bg-dark text-light p-3 h-100">
-      <AceEditor
+      <Compiler></Compiler>
+      {/* <AceEditor
         className="ace-editor"
         height="100%"
         width="100%"
@@ -22,7 +24,7 @@ function RightPanel() {
           showLineNumbers: true,
           tabSize: 2
         }}
-      />
+      /> */}
     </div>
   );
 }
