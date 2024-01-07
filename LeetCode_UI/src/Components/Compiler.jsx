@@ -12,36 +12,61 @@ function Compiler() {
   const [language, setLanguage] = useState("java");
   const [jobId, setJobId] = useState(null);
   const [status, setStatus] = useState(null);
-  //   const [jobDetails, setJobDetails] = useState(null);
+  const [data, setData] = useState(null);
+  const [finalCode, setFinalCode] = useState("");
 
-  const [data,setData] = useState(null)
-  const [finalCode,setFinalCode] = useState('')
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch("http://localhost:5000/data");
+        const data = await response.json();
+        setData(data);
 
-  async function handleSubmit() {
-    // console.log(code);
-    
-    if(language === 'py'){
-      setFinalCode(code + data.py.initial_code)
-    }else if(language === 'java'){
-      setFinalCode(code + data.java.initial_code)
-    }else if(language === 'js'){
-      setFinalCode(data.js.initial_code + code)
-    }else{
-      setFinalCode(data.cpp.initial_code + code)
+        const codePython = data.py;
+        const codeCPP = data.cpp;
+        const codeJava = data.java;
+        const codejs = data.js;
+
+        if (language === "py") {
+          setCode(codePython.user_code || "");
+        } else if (language === "java") {
+          setCode(codeJava.user_code || "");
+        } else if (language === "cpp") {
+          setCode(codeCPP.user_code || "");
+        } else {
+          setCode(codejs.user_code || "");
+        }
+      } catch (error) {
+        console.error("Error fetching problems:", error);
+      }
     }
 
-    const payLoad = {
-      language,
-      finalCode,
-    };
+    fetchData();
+  }, [language]);
 
+  useEffect(() => {
+    if (language === "py") {
+      setFinalCode(code + (data?.py?.initial_code || ""));
+    } else if (language === "java") {
+      setFinalCode(code + (data?.java?.initial_code || ""));
+    } else if (language === "js") {
+      setFinalCode((data?.js?.initial_code || "") + code);
+    } else {
+      setFinalCode((data?.cpp?.initial_code || "") + code);
+    }
+  }, [language, code, data]);
+
+  async function handleSubmit() {
     console.log(finalCode);
 
     try {
       setJobId("");
       setStatus("");
       setResult("");
-      const ans = await axios.post("http://localhost:5000/run", {language:language,code:finalCode});
+      const ans = await axios.post("http://localhost:5000/run", {
+        language: language,
+        code: finalCode,
+      });
       console.log(ans);
       setJobId(ans.data.jobId);
 
@@ -58,7 +83,6 @@ function Compiler() {
         if (success) {
           const { status: jobStatus, output: jobOutput } = job;
           setStatus(jobStatus);
-          //   setJobDetails(job);
           if (jobStatus === "pending") return;
           setResult(jobOutput);
           clearInterval(interval);
@@ -71,7 +95,7 @@ function Compiler() {
       }, 1000);
     } catch ({ response }) {
       if (response) {
-        const errorMessage = response.data.response
+        const errorMessage = response.data.response;
         setResult(errorMessage);
       } else {
         setResult("Something went wrong");
@@ -79,44 +103,8 @@ function Compiler() {
     }
   }
 
-  useEffect(() => {
-    getCode();
-  }, [language]);
-
-  async function getCode() {
-    try {
-      const response = await fetch("http://localhost:5000/data");
-      const data = await response.json();
-      setData(data);
-      console.log(data)
-
-      //const output = data.output;
-      const codePython = data.py;
-      const codeCPP = data.cpp;
-      const codeJava = data.java;
-      const codejs = data.js;
-
-
-      
-      if (language === 'py'){
-        setCode(codePython.user_code || "");
-      } else if (language === 'java') {
-        setCode(codeJava.user_code || "");
-      } else if (language === 'cpp') {
-        setCode(codeCPP.user_code || "");
-      } else {
-        setCode(codejs.user_code || "");
-      }
-
-    } catch (error) {
-      console.error("Error fetching problems:", error);
-    }
-  }
-
-
   return (
     <>
-    {console.log(code)}
       <div>
         <h2>Code Compiler</h2>
         <div>
@@ -124,7 +112,6 @@ function Compiler() {
             value={language}
             onChange={(e) => {
               setLanguage(e.target.value);
-              console.log(e.target.value);
             }}
           >
             <option value="java">Java</option>
@@ -147,7 +134,9 @@ function Compiler() {
             showLineNumbers: true,
             tabSize: 2,
           }}
-          onChange={(newCode) => setCode(newCode)}
+          onChange={(newCode) => {
+            setCode(newCode);
+          }}
         />
 
         <div>
