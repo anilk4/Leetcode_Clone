@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
@@ -14,19 +14,34 @@ function Compiler() {
   const [status, setStatus] = useState(null);
   //   const [jobDetails, setJobDetails] = useState(null);
 
+  const [data,setData] = useState(null)
+  const [finalCode,setFinalCode] = useState('')
+
   async function handleSubmit() {
-    console.log(code);
+    // console.log(code);
+    
+    if(language === 'py'){
+      setFinalCode(code + data.py.initial_code)
+    }else if(language === 'java'){
+      setFinalCode(code + data.java.initial_code)
+    }else if(language === 'js'){
+      setFinalCode(data.js.initial_code + code)
+    }else{
+      setFinalCode(data.cpp.initial_code + code)
+    }
 
     const payLoad = {
       language,
-      code,
+      finalCode,
     };
+
+    console.log(finalCode);
 
     try {
       setJobId("");
       setStatus("");
       setResult("");
-      const ans = await axios.post("http://localhost:5000/run", payLoad);
+      const ans = await axios.post("http://localhost:5000/run", {language:language,code:finalCode});
       console.log(ans);
       setJobId(ans.data.jobId);
 
@@ -56,7 +71,7 @@ function Compiler() {
       }, 1000);
     } catch ({ response }) {
       if (response) {
-        const errorMessage = response.data.stderr;
+        const errorMessage = response.data.response
         setResult(errorMessage);
       } else {
         setResult("Something went wrong");
@@ -64,10 +79,44 @@ function Compiler() {
     }
   }
 
+  useEffect(() => {
+    getCode();
+  }, [language]);
+
+  async function getCode() {
+    try {
+      const response = await fetch("http://localhost:5000/data");
+      const data = await response.json();
+      setData(data);
+      console.log(data)
+
+      //const output = data.output;
+      const codePython = data.py;
+      const codeCPP = data.cpp;
+      const codeJava = data.java;
+      const codejs = data.js;
+
+
+      
+      if (language === 'py'){
+        setCode(codePython.user_code || "");
+      } else if (language === 'java') {
+        setCode(codeJava.user_code || "");
+      } else if (language === 'cpp') {
+        setCode(codeCPP.user_code || "");
+      } else {
+        setCode(codejs.user_code || "");
+      }
+
+    } catch (error) {
+      console.error("Error fetching problems:", error);
+    }
+  }
 
 
   return (
     <>
+    {console.log(code)}
       <div>
         <h2>Code Compiler</h2>
         <div>

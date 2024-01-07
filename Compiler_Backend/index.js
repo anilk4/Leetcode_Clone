@@ -37,6 +37,7 @@ app.get("/", (req, res) => {
 app.post("/run", async (req, res) => {
   const { language = "java", code } = req.body;
   console.log(language);
+  console.log(code);
 
   if (code === undefined || code.length <= 0) {
     return res.status(500).json({ success: "false", error: "code is empty" });
