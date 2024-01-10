@@ -46,15 +46,60 @@ function Compiler() {
 
   useEffect(() => {
     if (language === "py") {
-      setFinalCode(code + (data?.py?.initial_code || ""));
+      setFinalCode(code +'\n'+ (data?.py?.initial_code || ""));
     } else if (language === "java") {
-      setFinalCode(code + (data?.java?.initial_code || ""));
+      const finalJavaCode = insertCodeBetweenImportsAndSolution((data?.java?.initial_code || ""), code);
+      setFinalCode(finalJavaCode);
     } else if (language === "js") {
-      setFinalCode((data?.js?.initial_code || "") + code);
+      setFinalCode((data?.js?.initial_code || "") +'\n'+ code);
     } else {
-      setFinalCode((data?.cpp?.initial_code || "") + code);
+      setFinalCode((data?.cpp?.initial_code || "") +'\n'+ code);
     }
   }, [language, code, data]);
+
+const insertCodeBetweenImportsAndSolution = (initial_code, userCode) => {
+  const lines = userCode.split('\n');
+  let lastImportIndex = -1;
+  let classIndex = -1;
+
+  for (let i = lines.length - 1; i >= 0; i--) {
+    if (lines[i].trim().startsWith("import ")) {
+      lastImportIndex = i;
+      break;
+    }
+  }
+
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].trim().startsWith("class Solution")) {
+      classIndex = i;
+      break;
+    }
+  }
+
+  if (lastImportIndex !== -1 && classIndex !== -1) {
+    // console.log("importStatements",initial_code);
+    const modifiedUserCode =
+      lines.slice(0, lastImportIndex + 1).join('\n') +
+      '\n' + 
+      initial_code + '\n'+
+      lines.slice(classIndex).join('\n') 
+    
+    return modifiedUserCode;
+  } else if (classIndex === -1) {
+    // console.log("importStatements",initial_code);
+
+    const modifiedUserCode =
+      lines.slice(0, lastImportIndex + 1).join('\n') +
+      '\n' +  
+      initial_code 
+
+    return modifiedUserCode;
+  }
+  // console.log("importStatements",initial_code);
+  return initial_code + userCode;
+};
+
+
 
   async function handleSubmit() {
     console.log(finalCode);
