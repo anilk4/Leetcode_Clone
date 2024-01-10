@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import AceEditor from "react-ace";
+import { useRecoilValue,useSetRecoilState } from 'recoil';
+import {userEmailState} from '../store/selector/userEmail.js';
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/ext-language_tools";
 import "./Compiler.css";
+import { Typography } from "@mui/material";
 
 function Compiler() {
   const [code, setCode] = useState("");
@@ -14,6 +17,8 @@ function Compiler() {
   const [status, setStatus] = useState(null);
   const [data, setData] = useState(null);
   const [finalCode, setFinalCode] = useState("");
+
+  const userEmail=useRecoilValue(userEmailState);
 
   useEffect(() => {
     async function fetchData() {
@@ -139,9 +144,10 @@ function Compiler() {
           }}
         />
 
-        <div>
+        {userEmail && <div>
           <button onClick={handleSubmit}>Submit</button>
-        </div>
+        </div>}
+        {!userEmail && <Typography>you need to login first to submit this code</Typography>}
       </div>
       <p>{status}</p>
       <p>{jobId ? `Job ID: ${jobId}` : ""}</p>
