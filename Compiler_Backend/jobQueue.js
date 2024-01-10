@@ -1,10 +1,11 @@
 const Queue = require("bull");
-const jobQueue = new Queue("job-queue");
+const jobQueue = new Queue("job-runner-queue");
 const Job = require("./models/job");
 
 const { executeJava } = require("./executeJava");
 const { executePython } = require("./executePython");
 const { executeJS } = require("./executeJavascript");
+const { executeCpp } = require("./executeCpp");
 
 const NUM_WORKS = 5;
 
@@ -29,6 +30,9 @@ jobQueue.process(NUM_WORKS, async ({ data }) => {
       console.log("js here");
       output = await executeJS(job.filepath);
       console.log("output ", output);
+    } else {
+      output = await executeCpp(job.filepath);
+      console.log("Cpp Executed", output);
     }
 
     job["completedAt"] = new Date();

@@ -50,9 +50,9 @@ function Compiler() {
     } else if (language === "java") {
       setFinalCode(code + (data?.java?.initial_code || ""));
     } else if (language === "js") {
-      setFinalCode((data?.js?.initial_code || "") + code);
+      setFinalCode(code + (data?.js?.initial_code || ""));
     } else {
-      setFinalCode((data?.cpp?.initial_code || "") + code);
+      setFinalCode(code + (data?.cpp?.initial_code || ""));
     }
   }, [language, code, data]);
 
