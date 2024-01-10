@@ -56,9 +56,9 @@ function Compiler() {
       const finalJavaCode = insertCodeBetweenImportsAndSolution((data?.java?.initial_code || ""), code);
       setFinalCode(finalJavaCode);
     } else if (language === "js") {
-      setFinalCode((data?.js?.initial_code || "") +'\n'+ code);
+      setFinalCode(code + (data?.js?.initial_code || ""));
     } else {
-      setFinalCode((data?.cpp?.initial_code || "") +'\n'+ code);
+      setFinalCode(code + (data?.cpp?.initial_code || ""));
     }
   }, [language, code, data]);
 

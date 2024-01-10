@@ -1,0 +1,78 @@
+All Language Codes for Testing Purpose :
+
+1. C++ Code:
+
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+
+class Solution
+{
+public:
+    static std::vector<int> twoSum(std::vector<int> &nums, int target)
+    {
+        std::unordered_map<int, int> numMap;
+
+        for (int i = 0; i < nums.size(); ++i)
+        {
+            int complement = target - nums[i];
+
+            // Check if complement is present in the map
+            if (numMap.find(complement) != numMap.end())
+            {
+                // Return the indices of the two numbers
+                return {numMap[complement], i};
+            }
+
+            // Add the current number and its index to the map
+            numMap[nums[i]] = i;
+        }
+
+        // If no solution is found, return an empty vector
+        return {};
+    }
+};
+
+2. Javascript Code : class Solution
+{
+    // Function to find two numbers in an array that add up to a given target.
+    static twoSum(nums, target)
+    {
+        const numMap = new Map();
+
+        for (let i = 0; i < nums.length; ++i)
+        {
+            const complement = target - nums[i];
+
+            // Check if complement is present in the map
+            if (numMap.has(complement))
+            {
+                // Return the indices of the two numbers
+                return [ numMap.get(complement), i ];
+            }
+
+            // Add the current number and its index to the map
+            numMap.set(nums[i], i);
+        }
+
+        // If no solution is found, return an empty array
+        return [];
+    }
+}
+
+    3. Python code -
+    // def two_sum(nums, target):
+    //     num_map = {}
+
+    //     for i, num in enumerate(nums):
+    //         complement = target - num
+
+    //         # Check if complement is present in the map
+    //         if complement in num_map:
+    //             # Return the indices of the two numbers
+    //             return [num_map[complement], i]
+
+    //         # Add the current number and its index to the map
+    //         num_map[num] = i
+
+    //     return []
