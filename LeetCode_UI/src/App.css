@@ -1,0 +1,42 @@
+.container {
+    padding: 20px;
+    background-color: #fff;
+    border-color: #fff;
+    align-items: center;
+    text-align: center;
+    border-radius: 4px;
+  }
+
+.login-button{
+  display: inline-block;
+  padding: 10px;
+  background-color: #fff;
+  /* color: rgb(64, 68, 70); */
+  color:black;
+  background-color: black;
+  font-size: large;
+  cursor: pointer;
+}
+.login-button:hover{
+  color: #7CB9E8;
+  font-weight: 'bolder';
+  /* background-color: rgb(237, 241, 243); */
+} 
+
+.filled-button {
+  display: inline-block;
+  text-decoration: none;
+  padding: 10px 20px;
+  background-color: transparent;
+  color: #7CB9E8; /* Default text color */
+  border: 1px solid #7CB9E8;
+  border-radius: 20px;
+  background-color: wheat;
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+}
+
+.filled-button:hover {
+  background-color: #7CB9E8;
+  color: white; /* Text color on hover */
+}

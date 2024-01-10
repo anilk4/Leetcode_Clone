@@ -1,6 +1,13 @@
 const express = require("express");
 const { Problems } = require("../Database/problemsDB");
 const app = express();
+const z=require('zod');
+const jwt=require('jsonwebtoken');
+const SECRET = require('../middleware/auth')
+const User = require("../Database/account");
+
+
+
 
 app.get('/getAll', async(req, res) => {
     try {
