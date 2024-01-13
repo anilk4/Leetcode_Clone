@@ -2,7 +2,24 @@ const mongoose=require("mongoose");
 
 const submissionsSchema=new mongoose.Schema({
   id:Number,
-  language:String
+  code:{
+    java:{
+        type:String,
+        default:null
+    },
+    cpp:{
+        type:String,
+        default:null
+    },
+    py:{
+        type:String,
+        default:null
+    },
+    js:{
+        type:String,
+        default:null
+    }
+  }
 })
 
 

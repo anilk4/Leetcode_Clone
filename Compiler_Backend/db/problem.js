@@ -8,17 +8,30 @@ try{
     console.log(err);
 }
 
-const ProblemSchema = new mongoose.Schema({
-  id: Number,
-  title: String,
-  description: String,
-  difficulty: String,
-  acceptance_rate: String,
-  companies: String,
-  related_topics: String,
-});
+const TestcaseSchema=new mongoose.Schema({
+    code:{
+        java:{
+            type:String,
+            default:null
+        },
+        cpp:{
+            type:String,
+            default:null
+        },
+        py:{
+            type:String,
+            default:null
+        },
+        js:{
+            type:String,
+            default:null
+        }
+      },
+    output:{
 
-const problemSchema = new mongoose.Schema({
+    }
+})
+const ProblemSchema = new mongoose.Schema({
   main: {
       id: Number,
       title: String,
@@ -28,7 +41,7 @@ const problemSchema = new mongoose.Schema({
       companies:String,
       related_topics:String,
   },
-  test: Array,
+  testcase: [TestcaseSchema],
 });
 
 

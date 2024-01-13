@@ -4,6 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require('dotenv')
 dotenv.config()
+const User =require("./db/user");
 
 const { generateFile } = require("./generateFile");
 
@@ -34,11 +35,11 @@ app.get("/", (req, res) => {
   return res.json({ message: "Hello World" });
 });
 
-app.post("/run", async (req, res) => {
-  const { language = "java", code } = req.body;
+app.post("/run/:username", async (req, res) => {
+  const { language = "java", code, problem_id,output } = req.body;
+  const username=req.username;
   console.log(language);
   console.log(code);
-
   if (code === undefined || code.length <= 0) {
     return res.status(500).json({ success: "false", error: "code is empty" });
   }
@@ -50,11 +51,39 @@ app.post("/run", async (req, res) => {
       throw Error(`cannot find Job with id ${jobId}`);
     }
     const jobId = job["_id"];
-    addJobToQueue(jobId);
+    addJobToQueue(jobId,username,problem_id);
     console.log("job: ", job);
+    
+    const jobObject=Job.findById(jobId);
+    const user=User.findOne({username:username});
+    if(output==="hello"){
+      const newUser={
+        submissions:{
+          id:problem_id,
+          code:{
+            language:code
+          }
+        },
+        problems_solved_count:user.problems_solved_count+1
+      }
 
+      const user=User.findOneAndUpdate({username:req.params.username},newUser,{new:true});
+    }
     res.status(201).json({ jobId });
- 
+});
+
+
+app.get("/getProblem",async(req,res)=>{
+  const username=req.body.username;
+  const problem_id=req.body.id;
+  const user=User.findOne({username:username});
+  if(!user){
+    res.status(404).send("at this username code is not found");
+  }
+  else{
+    res.status(200).send(user);
+  }
+
 });
 
 app.get("/status", async (req, res) => {
@@ -71,9 +100,6 @@ app.get("/status", async (req, res) => {
   if (job === undefined) {
     return res.status(400).json({ success: false, error: "couldn't find job" });
   }
-
-
-
   return res.status(200).json({ success: true, job });
 });
 
