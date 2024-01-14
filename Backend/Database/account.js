@@ -1,10 +1,28 @@
 const mongoose=require("mongoose");
 
 const submissionsSchema=new mongoose.Schema({
-  id:Number,
-  language:String
-})
-
+    id:Number,
+    code:{
+      java:{
+          type:String,
+          default:null
+      },
+      cpp:{
+          type:String,
+          default:null
+      },
+      py:{
+          type:String,
+          default:null
+      },
+      js:{
+          type:String,
+          default:null
+      }
+    }
+  })
+  
+  
 
 const userSchema = new mongoose.Schema({
     name: {

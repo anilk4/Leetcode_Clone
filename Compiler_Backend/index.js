@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const dotenv = require('dotenv')
 dotenv.config()
 const User =require("./db/user");
+const axios=require("axios")
 
 const { generateFile } = require("./generateFile");
 
@@ -12,6 +13,7 @@ const { generateFile } = require("./generateFile");
 const Job = require("./models/job");
 const { addJobToQueue } = require("./jobQueue");
 const Test = require("./db/testDB");
+const { response } = require("../Backend/routes/problems");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -36,8 +38,8 @@ app.get("/", (req, res) => {
 });
 
 app.post("/run/:username", async (req, res) => {
-  const { language = "java", code, problem_id,output } = req.body;
-  const username=req.username;
+  const { language, code, problem_id,output } = req.body;
+  const username=req.params.username;
   console.log(language);
   console.log(code);
   if (code === undefined || code.length <= 0) {
@@ -51,12 +53,13 @@ app.post("/run/:username", async (req, res) => {
       throw Error(`cannot find Job with id ${jobId}`);
     }
     const jobId = job["_id"];
-    addJobToQueue(jobId,username,problem_id);
+    addJobToQueue(jobId);
     console.log("job: ", job);
     
     const jobObject=Job.findById(jobId);
     const user=User.findOne({username:username});
-    if(output==="hello"){
+    console.log(output+" "+ jobObject.output);
+    if(output==jobObject.output){
       const newUser={
         submissions:{
           id:problem_id,
@@ -65,9 +68,16 @@ app.post("/run/:username", async (req, res) => {
           }
         },
         problems_solved_count:user.problems_solved_count+1
+        
       }
+      
+      const respo=await axios.put(`http://localhost:3000/getUser/:${username}`,newUser ).then(response => {
+        res.status(200).send({response});
+      })
+      .catch(error => {
+        res.status(401).send({error});
+      });
 
-      const user=User.findOneAndUpdate({username:req.params.username},newUser,{new:true});
     }
     res.status(201).json({ jobId });
 });
