@@ -34,11 +34,35 @@ app.get("/", (req, res) => {
   return res.json({ message: "Hello World" });
 });
 
-app.post("/run", async (req, res) => {
-  const { language = "java", code } = req.body;
-  console.log(language);
-  console.log(code);
+// app.post("/run", async (req, res) => {
+//   const { language, code } = req.body;
+//   console.log(language);
+//   console.log(code);
 
+//   if (code === undefined || code.length <= 0) {
+//     return res.status(500).json({ success: "false", error: "code is empty" });
+//   }
+
+//     const filepath = await generateFile(language, code);
+
+//     const job = await new Job({ language, filepath }).save();
+//     if (job === undefined) {
+//       throw Error(`cannot find Job with id ${jobId}`);
+//     }
+//     const jobId = job["_id"]; //filepath and language stored in mongodb hence, fetching job[_id] from mongodb
+//     addJobToQueue(jobId);
+//     console.log("job: ", job);
+
+    
+
+//     res.status(201).json({ jobId });
+ 
+// });
+
+app.post("/run", async (req, res) => {
+  const { username, language, code, problem_id, output } = req.body;
+
+  try {
   if (code === undefined || code.length <= 0) {
     return res.status(500).json({ success: "false", error: "code is empty" });
   }
@@ -52,9 +76,33 @@ app.post("/run", async (req, res) => {
     const jobId = job["_id"];
     addJobToQueue(jobId);
     console.log("job: ", job);
+    
+    const jobObject=Job.findById(jobId);
 
-    res.status(201).json({ jobId });
- 
+    console.log(output+" "+ jobObject.output);
+
+    let json = {}
+
+    if(output == jobObject.output){
+      let json = {
+        username: username,
+        problem_id: problem_id,
+        language: language,
+        output: true
+      }
+    } else {
+      let json = {
+        username: username,
+        problem_id: problem_id,
+        language: language,
+        output: false
+      }
+    }
+    res.status(201).json(json);
+  } catch (error) {
+    console.error('Error processing data in backend (b):', error.message);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
 });
 
 app.get("/status", async (req, res) => {
