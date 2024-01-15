@@ -83,6 +83,8 @@ app.post("/run", async (req, res) => {
 
     let json = {}
 
+    console.log("Jobobject output : ", jobObject.output);
+
     if(output == jobObject.output){
       let json = {
         username: username,

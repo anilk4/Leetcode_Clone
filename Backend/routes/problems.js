@@ -6,7 +6,7 @@ const jwt=require('jsonwebtoken');
 const SECRET = require('../middleware/auth')
 const User = require("../Database/account");
 const { authenticateJwt } = require("../middleware/auth");
-
+const axios = require('axios');
 
 const codeInp=z.object({
   username:z.string(),
