@@ -25,7 +25,7 @@ app.get('/getAll', async(req, res) => {
     }
 });
 
-app.post('/code', async (req, res) => {
+app.post('/code', authenticateJwt, async (req, res) => {
   try {
     const parsedInput = codeInp.safeParse(req.body);
 
