@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import AceEditor from "react-ace";
-import { useRecoilValue,useSetRecoilState } from 'recoil';
-import {userEmailState} from '../store/selector/userEmail.js';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { userEmailState } from '../store/selector/userEmail.js';
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/ext-language_tools";
@@ -18,7 +18,7 @@ function Compiler() {
   const [data, setData] = useState(null);
   const [finalCode, setFinalCode] = useState("");
 
-  const userEmail=useRecoilValue(userEmailState);
+  const userEmail = useRecoilValue(userEmailState);
 
   useEffect(() => {
     async function fetchData() {
@@ -51,7 +51,7 @@ function Compiler() {
 
   useEffect(() => {
     if (language === "py") {
-      setFinalCode(code +'\n'+ (data?.py?.initial_code || ""));
+      setFinalCode(code + '\n' + (data?.py?.initial_code || ""));
     } else if (language === "java") {
       const finalJavaCode = insertCodeBetweenImportsAndSolution((data?.java?.initial_code || ""), code);
       setFinalCode(finalJavaCode);
@@ -62,48 +62,47 @@ function Compiler() {
     }
   }, [language, code, data]);
 
-const insertCodeBetweenImportsAndSolution = (initial_code, userCode) => {
-  const lines = userCode.split('\n');
-  let lastImportIndex = -1;
-  let classIndex = -1;
+  const insertCodeBetweenImportsAndSolution = (initial_code, userCode) => {
+    const lines = userCode.split('\n');
+    let lastImportIndex = -1;
+    let classIndex = -1;
 
-  for (let i = lines.length - 1; i >= 0; i--) {
-    if (lines[i].trim().startsWith("import ")) {
-      lastImportIndex = i;
-      break;
+    for (let i = lines.length - 1; i >= 0; i--) {
+      if (lines[i].trim().startsWith("import ")) {
+        lastImportIndex = i;
+        break;
+      }
     }
-  }
 
-  for (let i = 0; i < lines.length; i++) {
-    if (lines[i].trim().startsWith("class Solution")) {
-      classIndex = i;
-      break;
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].trim().startsWith("class Solution")) {
+        classIndex = i;
+        break;
+      }
     }
-  }
 
-  if (lastImportIndex !== -1 && classIndex !== -1) {
+    if (lastImportIndex !== -1 && classIndex !== -1) {
+      // console.log("importStatements",initial_code);
+      const modifiedUserCode =
+        lines.slice(0, lastImportIndex + 1).join('\n') +
+        '\n' +
+        initial_code + '\n' +
+        lines.slice(classIndex).join('\n')
+
+      return modifiedUserCode;
+    } else if (classIndex === -1) {
+      // console.log("importStatements",initial_code);
+
+      const modifiedUserCode =
+        lines.slice(0, lastImportIndex + 1).join('\n') +
+        '\n' +
+        initial_code
+
+      return modifiedUserCode;
+    }
     // console.log("importStatements",initial_code);
-    const modifiedUserCode =
-      lines.slice(0, lastImportIndex + 1).join('\n') +
-      '\n' + 
-      initial_code + '\n'+
-      lines.slice(classIndex).join('\n') 
-    
-    return modifiedUserCode;
-  } else if (classIndex === -1) {
-    // console.log("importStatements",initial_code);
-
-    const modifiedUserCode =
-      lines.slice(0, lastImportIndex + 1).join('\n') +
-      '\n' +  
-      initial_code 
-
-    return modifiedUserCode;
-  }
-  // console.log("importStatements",initial_code);
-  return initial_code + userCode;
-};
-
+    return initial_code + userCode;
+  };
 
 
   async function handleSubmit() {
@@ -161,7 +160,8 @@ const insertCodeBetweenImportsAndSolution = (initial_code, userCode) => {
           <select
             value={language}
             onChange={(e) => {
-              setLanguage(e.target.value);
+              const selectedValue = e.target.value;
+              setLanguage(selectedValue);
             }}
           >
             <option value="java">Java</option>
@@ -184,9 +184,7 @@ const insertCodeBetweenImportsAndSolution = (initial_code, userCode) => {
             showLineNumbers: true,
             tabSize: 2,
           }}
-          onChange={(newCode) => {
-            setCode(newCode);
-          }}
+          onChange={(newCode) => setCode(newCode)}
         />
 
         {userEmail && <div>

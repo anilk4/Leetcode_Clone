@@ -34,28 +34,94 @@ app.get("/", (req, res) => {
   return res.json({ message: "Hello World" });
 });
 
-app.post("/run", async (req, res) => {
-  const { language = "java", code } = req.body;
-  console.log(language);
-  console.log(code);
+// app.post("/run", async (req, res) => {
+//   const { language, code } = req.body;
+//   console.log(language);
+//   console.log(code);
 
-  if (code === undefined || code.length <= 0) {
-    return res.status(500).json({ success: "false", error: "code is empty" });
-  }
+//   if (code === undefined || code.length <= 0) {
+//     return res.status(500).json({ success: "false", error: "code is empty" });
+//   }
+
+//     const filepath = await generateFile(language, code);
+
+//     const job = await new Job({ language, filepath }).save();
+//     if (job === undefined) {
+//       throw Error(`cannot find Job with id ${jobId}`);
+//     }
+//     const jobId = job["_id"]; //filepath and language stored in mongodb hence, fetching job[_id] from mongodb
+//     addJobToQueue(jobId);
+//     console.log("job: ", job);
+
+    
+
+//     res.status(201).json({ jobId });
+ 
+// });
+
+app.post("/run", async (req, res) => {
+  const { username, language, code, problem_id, output } = req.body;
+
+  try {
+    if (code === undefined || code.length <= 0) {
+      return res.status(500).json({ success: false, error: "code is empty" });
+    }
 
     const filepath = await generateFile(language, code);
 
     const job = await new Job({ language, filepath }).save();
     if (job === undefined) {
-      throw Error(`cannot find Job with id ${jobId}`);
+      throw Error(`Cannot find Job with id ${jobId}`);
     }
     const jobId = job["_id"];
-    addJobToQueue(jobId);
+    await addJobToQueue(jobId);
+
     console.log("job: ", job);
 
-    res.status(201).json({ jobId });
- 
+    // Wait until the job is completed and the output is available
+    let jobObject = await Job.findById(jobId);
+    console.log("first", jobObject);
+
+    // Continue checking if the job is completed and output is available
+    while (jobObject.status !== 'success' || jobObject.output === undefined) {
+      // Add some delay before checking again (e.g., 1 second)
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Fetch the updated jobObject
+      jobObject = await Job.findById(jobId);
+    }
+
+    console.log("Jobobject output : ", jobObject.output);
+
+    let json = {};
+    let out2 = output.toString().replace(/[\r\n]+/g, ''); // Remove newline characters
+    let job2 = jobObject.output.toString().replace(/[\r\n]+/g, ''); // Remove newline characters
+
+    if (out2 === job2) {
+      json = {
+        username: username,
+        problem_id: problem_id,
+        language: language,
+        output: true
+      };
+    } else {
+      json = {
+        username: username,
+        problem_id: problem_id,
+        language: language,
+        output: false
+      };
+    }
+
+    console.log("Jobobject output 2: ", json);
+    console.log( "job:", job2, "out:", out2)
+    res.status(201).json(json);
+
+  } catch (error) {
+    console.error('Error processing data in backend:', error.message);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
 });
+
 
 app.get("/status", async (req, res) => {
   const jobId = req.query.id;
