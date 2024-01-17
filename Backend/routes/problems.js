@@ -25,48 +25,60 @@ app.get('/getAll', async(req, res) => {
     }
 });
 
-app.post('/code', async(req, res) => {
-  
-    let parsedInput=codeInp.safeParse(req.body);
+app.post('/code', async (req, res) => {
+  try {
+    const parsedInput = codeInp.safeParse(req.body);
 
-    // if(!parsedInput.success){
-    //   return res.status(403).json({
-    //     msg:"Parsing Error"
-    //   });
-    // }
-    const username=parsedInput.data.username;
-    const language=parsedInput.data.language;
-    const code = parsedInput.data.code;
-    const problem_id = parsedInput.data.problem_id;
-    const output = parsedInput.data.output;
-
-    // const user = await User.findOne({ username: req.user.username });
-    // if (!user) {
-    //   res.status(403).json({msg: "User doesnt exist"})
-    //   return
-    // }
-
-    const dataToSend = {
-      username,
-      language,
-      code,
-      problem_id,
-      output,
-    };
-  
-    try {
-      const response = await axios.post('http://localhost:5000/run', dataToSend);
-      console.log('Response from backend (b):', response.data);
-  
-      // Handle the response as needed
-      res.status(200).json(response.data);
-    } catch (error) {
-      console.error('Error sending data to compiler backend:', error.message);
-      res.status(500).json({ msg: 'Internal Server Error' });
+    if (!parsedInput.success) {
+      return res.status(403).json({
+        msg: 'Parsing Error',
+      });
     }
 
-    console.log(username +" "+ language +" "+ problem_id + " " + code + " Expected output :" + output);
-})
+    const { username, language, code, problem_id, output } = parsedInput.data;
+
+    const user = await User.findOne({ username: username });
+
+    if (!user) {
+      return res.status(403).json({ msg: 'User does not exist' });
+    }
+
+    const dataToSend = { username, language, code, problem_id, output };
+
+    const response = await axios.post('http://localhost:5000/run', dataToSend);
+
+    console.log('Response from backend (b):', response.data);
+
+    if (response.data.output === true) {
+      const newCode = {
+        submissions: {
+          id: response.data.problem_id,
+          code: {
+            [response.data.language]: code,
+          },
+        },
+      };
+
+      const updatedUser = await User.findOneAndUpdate(
+        { username },
+        newCode,
+        { new: true }
+      );
+
+      if (updatedUser) {
+        return res.json({ message: 'User updated successfully' });
+      } else {
+        return res.status(404).json({ message: 'User not found' });
+      }
+    }
+
+    return res.status(200).json(response.data);
+  } catch (error) {
+    console.error('Error processing data in frontend:', error.message);
+    return res.status(500).json({ msg: 'Internal Server Error' });
+  }
+});
+
 
 app.put('/getUser/:username',async (req,res)=>{
     const newUser=req.body;
