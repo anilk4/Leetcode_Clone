@@ -4,34 +4,26 @@ import { Resizable } from 'react-resizable';
 import LeftPanel from "./LeftPanel";
 import RightPanel from "./RightPanel";
 import './Panel/Resizable.css';
+import { useSelector } from "react-redux";
 
 const Display = () => {
   const { id } = useParams();
   const [Data, setData] = useState({});
+  const data = useSelector(store => store.leetCodeProblems.problems);
 
-  async function getData() {
-    const data = await fetch("http://localhost:3000/problem/getAll");
-    const json = await data.json();
-    console.log(json);
-    const Problems = json.problems || [];
-    const selectedProblem = Problems.find(
-      (problem) => problem.id === parseInt(id, 10)
-    );
-    setData(selectedProblem);
+  console.log("display data: ", data);
+
+  function getData() {
+    const selectedProblem = data.problems.find(prob => prob.id === parseInt(id));
+    setData(selectedProblem || {});
   }
 
   useEffect(() => {
     getData();
-  }, [id]);
+  }, [id, data]);
 
 
   return (
-    /*     <div>
-          <div className="display">
-            <LeftPanel data={Data}></LeftPanel>
-            <RightPanel />
-          </div>
-        </div> */
     <div className="container-fluid">
       <div className="row">
         {/* Left side: Problem Description */}
