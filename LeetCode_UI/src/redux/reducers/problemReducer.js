@@ -31,5 +31,5 @@ export const getProblems = createAsyncThunk('product/get',async ()=>{
     const data = await fetch("http://localhost:3000/problem/getAll")
     const result = await data.json()
 
-    return result
+    return result;
 })

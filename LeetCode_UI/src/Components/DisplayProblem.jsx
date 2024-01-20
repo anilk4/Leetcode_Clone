@@ -13,8 +13,8 @@ const Display = () => {
 
   console.log("display data: ", data);
 
-  function getData() {
-    const selectedProblem = data.problems.find(prob => prob.id === parseInt(id));
+  async function getData() {
+    const selectedProblem = await data.problems.find(prob => prob.id === parseInt(id));
     setData(selectedProblem || {});
   }
 
