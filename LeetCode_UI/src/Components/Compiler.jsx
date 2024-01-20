@@ -25,6 +25,7 @@ function Compiler() {
       try {
         const response = await fetch("http://localhost:5000/data");
         const data = await response.json();
+        console.log(data)
         setData(data);
 
         const codePython = data.py;

@@ -18,8 +18,8 @@ const codeInp=z.object({
 
 app.get('/getAll', async(req, res) => {
     try {
-        const course = await Problems.find();
-        return res.status(200).json({course})
+        const problems = await Problems.find();
+        return res.status(200).json({problems})
     } catch (error) {
         return res.status(500).json({"message":"internal server error"})
     }

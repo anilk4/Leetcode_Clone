@@ -5,7 +5,9 @@ import { HomeCarousel } from "./HomeCarousel/HomeCarousel";
 import Display from "./DisplayProblem";
 import { Link } from "react-router-dom";
 import './Panel/Resizable.css';
+import { useDispatch } from "react-redux";
 
+import { getProblems } from "../redux/reducers/problemReducer";
 const RecordsPerPage = 10;
 
 const Body = () => {
@@ -15,15 +17,24 @@ const Body = () => {
   const [difficultyLevel, setDifficultyLevel] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
 
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    getProblems();
+    getProblem();
   }, []);
 
-  async function getProblems() {
+  async function getProblem() {
     try {
       const response = await fetch("http://localhost:3000/problem/getAll");
       const data = await response.json();
-      const courseProblems = data.course || [];
+
+
+      const courseProblems = data.problems || [];
+      
+        dispatch(getProblems());
+ 
+
+
       setProblems(courseProblems);
       setFilterProblems(courseProblems);
     } catch (error) {
