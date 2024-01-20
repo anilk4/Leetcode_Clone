@@ -13,7 +13,7 @@ const Display = () => {
     const data = await fetch("http://localhost:3000/problem/getAll");
     const json = await data.json();
     console.log(json);
-    const Problems = json.course || [];
+    const Problems = json.problems || [];
     const selectedProblem = Problems.find(
       (problem) => problem.id === parseInt(id, 10)
     );
