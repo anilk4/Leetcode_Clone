@@ -5,7 +5,7 @@ import { HomeCarousel } from "./HomeCarousel/HomeCarousel";
 import Display from "./DisplayProblem";
 import { Link } from "react-router-dom";
 import './Panel/Resizable.css';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { getProblems } from "../redux/reducers/problemReducer";
 const RecordsPerPage = 10;
@@ -18,29 +18,24 @@ const Body = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const dispatch = useDispatch()
+  const data = useSelector(store => store.leetCodeProblems.problems)
+
+  const courseProblems = data.problems || [];
+  // console.log("courseProblems : ",courseProblems);
 
   useEffect(() => {
-    getProblem();
+    dispatch(getProblems());
   }, []);
 
-  async function getProblem() {
-    try {
-      const response = await fetch("http://localhost:3000/problem/getAll");
-      const data = await response.json();
 
-
-      const courseProblems = data.problems || [];
-      
-        dispatch(getProblems());
- 
-
-
+  useEffect(() => {
+    // Check if the data has been fetched before updating state
+    if (courseProblems.length > 0) {
       setProblems(courseProblems);
       setFilterProblems(courseProblems);
-    } catch (error) {
-      console.error("Error fetching problems:", error);
     }
-  }
+  }, [courseProblems]);
+ 
 
   const filterData = (searchTxt, difficultyLevel, problems) => {
     return problems.filter(
