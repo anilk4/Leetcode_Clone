@@ -28,6 +28,7 @@ const loginInput=z.object({
     })
 });
   app.post('/signup',async (req,res)=>{
+    // console.log(req.body);
     let parsedInput=signUpInput.safeParse(req.body);
     if(!parsedInput.success){
       return res.status(403).json({
@@ -38,14 +39,13 @@ const loginInput=z.object({
     const password=parsedInput.data.password;
     const name=parsedInput.data.name;
     const user = await User.findOne({username,password});
-    console.log(name+" "+password+" "+name);
+    console.log(username+" "+password+" "+name);
     if (user) {
       res.status(403).json({ message: 'User already exists' });
     } else {
       const obj={username:username,password:password,name:name};
       const newUser = new User(obj);
       newUser.save();
-      console.log(SECRET);
       const token = jwt.sign({ username, role: 'user' }, SECRET, { expiresIn: '1h' });
       res.json({ message: 'User created successfully', token });
     }

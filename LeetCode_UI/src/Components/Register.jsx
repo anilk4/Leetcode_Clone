@@ -17,12 +17,13 @@ function Register(){
         password:''
     })
     const handleSubmit=()=>{
+      // console.log(formData)
         axios.post(`${BASE_URL}/account/signup`,{
             username:formData.email,
             password:formData.password,
             name:formData.name
           }).then(response=>{
-            console.log(formData.name);
+            // console.log(formData.name);
             localStorage.setItem('userToken',response.data.token);
             console.log(localStorage.getItem('userToken'));
             setUser({
@@ -39,7 +40,7 @@ function Register(){
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        console.log(name,value)
+        // console.log(name,value)
         setFormData({
           ...formData,
           [name]: value,
@@ -53,7 +54,7 @@ function Register(){
                 </center>
                 <center>
                 <form>
-                    <TextField label="Name" variant='outlined' style={{width:300}}></TextField>
+                    <TextField label="Name" variant='outlined' name="name" onChange={handleChange} style={{width:300}}></TextField>
                     <br></br>
                     <TextField label="Email" variant="outlined" style={{marginTop:'10px',width:300}}name="email" onChange={handleChange}></TextField>
                     <br/>
