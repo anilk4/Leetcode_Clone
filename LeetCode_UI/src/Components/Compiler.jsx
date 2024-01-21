@@ -9,7 +9,9 @@ import "ace-builds/src-noconflict/ext-language_tools";
 import "./Compiler.css";
 import { Typography } from "@mui/material";
 
-function Compiler() {
+function Compiler({selectedProblem}) {
+
+
   const [code, setCode] = useState("");
   const [result, setResult] = useState("");
   const [language, setLanguage] = useState("java");
@@ -19,19 +21,14 @@ function Compiler() {
   const [finalCode, setFinalCode] = useState("");
 
   const userEmail = useRecoilValue(userEmailState);
+  // setData(selectedProblem);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch("http://localhost:5000/data");
-        const data = await response.json();
-        console.log(data)
-        setData(data);
 
-        const codePython = data.py;
-        const codeCPP = data.cpp;
-        const codeJava = data.java;
-        const codejs = data.js;
+        const codePython = selectedProblem.testcase.py;
+        const codeCPP = selectedProblem.testcase.cpp;
+        const codeJava = selectedProblem.testcase.java;
+        const codejs = selectedProblem.testcase.js;
 
         if (language === "py") {
           setCode(codePython.user_code || "");
@@ -42,24 +39,20 @@ function Compiler() {
         } else {
           setCode(codejs.user_code || "");
         }
-      } catch (error) {
-        console.error("Error fetching problems:", error);
-      }
+ 
     }
-
-    fetchData();
-  }, [language]);
+   ,[language]);
 
   useEffect(() => {
     if (language === "py") {
-      setFinalCode(code + '\n' + (data?.py?.initial_code || ""));
+      setFinalCode(code + '\n' + (selectedProblem.testcase?.py?.initial_code || ""));
     } else if (language === "java") {
-      const finalJavaCode = insertCodeBetweenImportsAndSolution((data?.java?.initial_code || ""), code);
+      const finalJavaCode = insertCodeBetweenImportsAndSolution((selectedProblem.testcase?.java?.initial_code || ""), code);
       setFinalCode(finalJavaCode);
     } else if (language === "js") {
-      setFinalCode(code + (data?.js?.initial_code || ""));
+      setFinalCode(code + (selectedProblem.testcase?.js?.initial_code || ""));
     } else {
-      setFinalCode(code + (data?.cpp?.initial_code || ""));
+      setFinalCode(code + (selectedProblem.testcase?.cpp?.initial_code || ""));
     }
   }, [language, code, data]);
 

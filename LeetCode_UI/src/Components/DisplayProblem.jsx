@@ -14,7 +14,9 @@ const Display = () => {
   console.log("display data: ", data);
 
   async function getData() {
-    const selectedProblem = await data.problems.find(prob => prob.id === parseInt(id));
+    const selectedProblem = data.problems.find(prob => prob.id === parseInt(id));
+    console.log("selectedProblem: ", selectedProblem);
+
     setData(selectedProblem || {});
   }
 
@@ -28,11 +30,11 @@ const Display = () => {
       <div className="row">
         {/* Left side: Problem Description */}
         <div className="col-md-6 border-right">
-          <LeftPanel data={Data}></LeftPanel>
+          {Data.id && <LeftPanel data={Data}></LeftPanel>}
         </div>
         {/* Right side: Editor */}
         <div className="col-md-6">
-          <RightPanel />
+          {Data.id && <RightPanel data={Data}/>}
         </div>
       </div>
     </div>
