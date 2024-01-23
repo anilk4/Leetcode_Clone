@@ -27,14 +27,23 @@ app.get('/getAll', async(req, res) => {
 
 app.post('/code', authenticateJwt, async (req, res) => {
   try {
+    console.log("inside /code");
+    // const { username, language, code, problem_id, output } = req.body;
+    // console.log(typeof username)
+    // console.log(typeof language)
+    // console.log(typeof code)
+    // console.log(typeof problem_id)
+    // console.log(typeof output)
+
     const parsedInput = codeInp.safeParse(req.body);
+    console.log(parsedInput);
 
     if (!parsedInput.success) {
       return res.status(403).json({
         msg: 'Parsing Error',
       });
     }
-
+    console.log(parsedInput);
     const { username, language, code, problem_id, output } = parsedInput.data;
 
     const user = await User.findOne({ username: username });
