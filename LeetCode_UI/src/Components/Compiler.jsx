@@ -110,13 +110,13 @@ function Compiler({selectedProblem}) {
       setResult("");
       
       // console.log(userEmail)
-
+      console.log(JSON.stringify(selectedProblem.testcase.output))
       const ans = await axios.post("http://localhost:3000/problem/code", {
         username: userEmail.username,
         language: language,
         code: finalCode,
         problem_id: selectedProblem.id,
-        output: selectedProblem.testcase.output.toString().replace(/[, \r\n]+/g, '')
+        output: JSON.stringify(selectedProblem.testcase.output)
       },{
         headers:{
           Authorization:`Bearer ${userToken}`,
