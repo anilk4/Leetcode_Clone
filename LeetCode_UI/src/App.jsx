@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { lazy, Suspense } from "react";
 import Discuss from './Components/Discuss';
 import { useEffect } from 'react';
 import Error from './Components/Error';
-import Profile from './Components/Profile';
 import Favourites from './Components/Favourites';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
@@ -15,17 +15,18 @@ import {RecoilRoot,useSetRecoilState} from 'recoil';
 import { BASE_URL } from './config';
 import axios from 'axios';
 
+const LazyProfile = lazy(() => import("./Components/UserProfile"));
 
 function App(){
   return (
     <RecoilRoot>
     <Router>
+    <InitUser/>
       <Header />
-      <InitUser/>
       
       <Routes>
         <Route path='/' element={<Body  />} />
-        <Route path='/profile' element={<Profile />} />
+        <Route path='/profile' element={<Suspense fallback={<div>Loading...</div>}><LazyProfile /></Suspense>} />
         <Route path='/discuss' element={<Discuss />} />
         <Route path='/favourite' element={<Favourites />} />
         <Route path='/display/:id' element={<Display />} />

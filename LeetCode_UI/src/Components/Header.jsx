@@ -60,13 +60,13 @@ const Header = () => {
                             <a className="nav-link" href='/'>Problems</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href='/'>Discuss</a>
+                            <a className="nav-link" href='/discuss'>Discuss</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href='/'>Profile</a>
+                            <a className="nav-link" href='/profile'>Profile</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href='/'>Favourite</a>
+                            <a className="nav-link" href='/favourite'>Favourite</a>
                         </li>
                     </ul>
                 </div>
