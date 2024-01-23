@@ -1,0 +1,31 @@
+{
+    "_id": {
+      "$oid": "658c5642fded91014f448c05"
+    },
+    "id": 1,
+    "title": "Two Sum",
+    "description": "Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`.\n\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\n\nYou can return the answer in any order.\n\n\nExample 1:\nInput: nums = [2,7,11,15], target = 9\nOutput: [0,1]\nOutput: Because nums[0] + nums[1] == 9, we return [0, 1].\n\nExample 2:\nInput: nums = [3,2,4], target = 6\nOutput: [1,2]\n\nExample 3:\nInput: nums = [3,3], target = 6\nOutput: [0,1]\n\nConstraints:\n`2 <= nums.length <= 103`\n`-109 <= nums[i] <= 109`\n`-109 <= target <= 109`\nOnly one valid answer exists.",
+    "difficulty": "Easy",
+    "acceptance_rate": "46.7",
+    "companies": "Amazon,Google,Apple,Adobe,Microsoft,Bloomberg,Facebook,Oracle,Uber,Expedia,Twitter,Nagarro,SAP,Yahoo,Cisco,Qualcomm,tcs,Goldman Sachs,Yandex,ServiceNow",
+    "related_topics": "Array,Hash Table",
+    "testcase": {
+      "cpp": {
+        "initial_code" : "",
+        "user_code": ""
+      },
+      "java": {
+        "initial_code" : "",
+        "user_code": ""
+        },
+      "py": {
+        "initial_code": "s = [\"()\", \"()[]{}\", \"(]\"]\n\nfinal_output = []\n\nfor i in range(len(s)):\n   result = isValid(s[i])\n   final_output.append(result)\n\nprint(final_output)",
+        "user_code": "def isValid(s):"
+      },
+      "js": {
+        "initial_code" : "",
+        "user_code": ""
+        },
+      "output": [true, true, false]
+    }
+  }

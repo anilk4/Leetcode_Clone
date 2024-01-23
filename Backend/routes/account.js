@@ -27,6 +27,17 @@ const loginInput=z.object({
         username: user.username
     })
 });
+app.get("/profile",authenticateJwt,  async (req, res) => {
+  const user = await User.findOne({ username: req.user.username });
+  console.log(user)
+  if (!user) {
+    res.status(403).json({msg : "Invalid User"});
+    return
+  }
+  res.json({user})
+  console.log(user)
+})
+
   app.post('/signup',async (req,res)=>{
     // console.log(req.body);
     let parsedInput=signUpInput.safeParse(req.body);

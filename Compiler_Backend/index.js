@@ -122,36 +122,36 @@ app.post("/run", async (req, res) => {
 });
 
 
-app.get("/status", async (req, res) => {
-  const jobId = req.query.id;
+// app.get("/status", async (req, res) => {
+//   const jobId = req.query.id;
 
-  if (jobId === undefined) {
-    return res
-      .status(400)
-      .json({ success: false, error: "missing id query param" });
-  }
+//   if (jobId === undefined) {
+//     return res
+//       .status(400)
+//       .json({ success: false, error: "missing id query param" });
+//   }
 
-  const job = await Job.findById(jobId);
+//   const job = await Job.findById(jobId);
 
-  if (job === undefined) {
-    return res.status(400).json({ success: false, error: "couldn't find job" });
-  }
+//   if (job === undefined) {
+//     return res.status(400).json({ success: false, error: "couldn't find job" });
+//   }
 
 
 
-  return res.status(200).json({ success: true, job });
-});
+//   return res.status(200).json({ success: true, job });
+// });
 
-app.get('/data', async (req, res) => {
-  try {
-      const result = await Test.findOne({ result_id: 1 });
+// app.get('/data', async (req, res) => {
+//   try {
+//       const result = await Test.findOne({ result_id: 1 });
 
-      return res.json(result);
-  } catch (error) {
-      console.error('Error fetching data from MongoDB:', error);
-      return res.status(500).send('Internal Server Error');
-    }
-});
+//       return res.json(result);
+//   } catch (error) {
+//       console.error('Error fetching data from MongoDB:', error);
+//       return res.status(500).send('Internal Server Error');
+//     }
+// });
 
 app.listen(5000, () => {
   console.log("listening on port 5000");
