@@ -58,28 +58,58 @@ app.post('/code', authenticateJwt, async (req, res) => {
 
     console.log('Response from backend (b):', response.data);
 
+    
+    let updatedUser
+    let newUser
+
     if (response.data.output === true) {
-      const newCode = {
-        submissions: {
-          id: response.data.problem_id,
-          code: {
-            [response.data.language]: code,
-          },
-        },
-      };
+      const submissionId = response.data.problem_id;
+      const language = response.data.language;
+    
+      // Check if the submission with the given id already exists for the user
+      const existingUser = await User.findOne({ username, 'submissions.id': submissionId });
+    
+      if (existingUser) {
+        // If submission exists, find the correct submission
+        const submissionIndex = existingUser.submissions.findIndex(submission => submission.id === submissionId);
+      
+        if (submissionIndex !== -1) {
+          // Submission found, check and update/add language code
+          const existingLanguageCode = existingUser.submissions[submissionIndex].code[language];
+      
+          // Update the language code, whether it exists or not
+          const update = {
+            [`submissions.${submissionIndex}.code.${language}`]: code,
+          };
+      
+          console.log(existingLanguageCode ? "Updating" : "Adding", "language code");
+      
+          updatedUser = await User.findOneAndUpdate(
+            { username, 'submissions.id': submissionId },
+            { $set: update },
+            { new: true }
+          );
+        }
+      } else {
+        // If submission doesn't exist, add a new submission with the language code
+        console.log("Problem submission doesn't exist, adding");
+        newUser = await User.findOneAndUpdate(
+          { username },
+          { $push: { submissions: { id: submissionId, code: { [language]: code } } } },
+          { new: true }
+        );
+      }
+      
+    }
+    
 
-      const updatedUser = await User.findOneAndUpdate(
-        { username },
-        newCode,
-        { new: true }
-      );
 
-      if (updatedUser) {
+      if (updatedUser || newUser) {
         return res.json({ message: 'User updated successfully' });
       } else {
         return res.status(404).json({ message: 'User not found' });
       }
-    }
+    
 
     return res.status(200).json(response.data);
   } catch (error) {
