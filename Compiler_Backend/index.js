@@ -91,10 +91,9 @@ app.post("/run", async (req, res) => {
     }
 
     console.log("Jobobject output : ", jobObject.output);
-
     let json = {};
-    let out2 = output.toString().replace(/[\r\n]+/g, ''); // Remove newline characters
-    let job2 = jobObject.output.toString().replace(/[\r\n]+/g, ''); // Remove newline characters
+    let out2 = output.toString().replace(/[, \r\n]+/g, ''); // Remove newline characters
+    let job2 = jobObject.output.match(/-?\d+/g).join('') // Remove newline characters
 
     if (out2 === job2) {
       json = {

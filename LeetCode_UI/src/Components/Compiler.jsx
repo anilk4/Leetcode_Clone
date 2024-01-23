@@ -23,6 +23,8 @@ function Compiler({selectedProblem}) {
   const userEmail = useRecoilValue(userEmailState);
   // setData(selectedProblem);
 
+  const userToken = localStorage.getItem("userToken");
+
   useEffect(() => {
 
         const codePython = selectedProblem.testcase.py;
@@ -106,37 +108,49 @@ function Compiler({selectedProblem}) {
       setJobId("");
       setStatus("");
       setResult("");
-      const ans = await axios.post("http://localhost:5000/run", {
+      
+      // console.log(userEmail)
+
+      const ans = await axios.post("http://localhost:3000/problem/code", {
+        username: userEmail.username,
         language: language,
         code: finalCode,
+        problem_id: selectedProblem.id,
+        output: selectedProblem.testcase.output.toString().replace(/[, \r\n]+/g, '')
+      },{
+        headers:{
+          Authorization:`Bearer ${userToken}`,
+          "Content-Type":"application/json"
+        }
       });
       console.log(ans);
-      setJobId(ans.data.jobId);
+      setJobId(ans.data);
 
-      let interval = setInterval(async () => {
-        const { data: statusRes } = await axios.get(
-          "http://localhost:5000/status",
-          {
-            params: { id: ans.data.jobId },
-          }
-        );
-        const { success, job, error } = statusRes;
-        console.log(statusRes);
+    //   let interval = setInterval(async () => {
+    //     const { data: statusRes } = await axios.get(
+    //       "http://localhost:5000/status",
+    //       {
+    //         params: { id: ans.data.jobId },
+    //       }
+    //     );
+    //     const { success, job, error } = statusRes;
+    //     console.log(statusRes);
 
-        if (success) {
-          const { status: jobStatus, output: jobOutput } = job;
-          setStatus(jobStatus);
-          if (jobStatus === "pending") return;
-          setResult(jobOutput);
-          clearInterval(interval);
-        } else {
-          console.error(error);
-          setResult(error);
-          setStatus("Bad request");
-          clearInterval(interval);
-        }
-      }, 1000);
-    } catch ({ response }) {
+    //     if (success) {
+    //       const { status: jobStatus, output: jobOutput } = job;
+    //       setStatus(jobStatus);
+    //       if (jobStatus === "pending") return;
+    //       setResult(jobOutput);
+    //       clearInterval(interval);
+    //     } else {
+    //       console.error(error);
+    //       setResult(error);
+    //       setStatus("Bad request");
+    //       clearInterval(interval);
+    //     }
+    //   }, 1000);
+   } 
+    catch ({ response }) {
       if (response) {
         const errorMessage = response.data.response;
         setResult(errorMessage);
