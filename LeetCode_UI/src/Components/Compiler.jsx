@@ -108,7 +108,9 @@ function Compiler({selectedProblem}) {
       setJobId("");
       setStatus("");
       setResult("");
-     
+      
+      // console.log(userEmail)
+
       const ans = await axios.post("http://localhost:3000/problem/code", {
         username: userEmail.username,
         language: language,
