@@ -51,7 +51,7 @@ function InitUser() {
       console.log(res.data);
       if(res.data){
         setUser({
-          userEmail:res.data
+          userEmail:res.data.username
         })
       }
       else{
