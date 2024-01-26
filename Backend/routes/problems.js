@@ -105,9 +105,9 @@ app.post('/code', authenticateJwt, async (req, res) => {
 
 
       if (updatedUser || newUser) {
-        return res.json({ message: 'User updated successfully' });
+        return res.json({ data : response.data, msg: "user submitted code successfully" });
       } else {
-        return res.status(404).json({ message: 'User not found' });
+        return res.status(404).json({ data : response.data, msg: "some test cases are failed" });
       }
     
 
