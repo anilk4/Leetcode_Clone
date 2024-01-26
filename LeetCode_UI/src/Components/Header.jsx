@@ -1,28 +1,4 @@
-/* import React from "react";
 
-const Logo = () => (
-    < a href='/'>
-        <img className="logo" alt='logo' src='https://shorturl.at/flCS0' />
-    </a>
-);
-
-const Header = () => {
-    return (
-        <div className="header">
-            <Logo />
-            <div className="nav-items">
-                <ul>
-                    <li>Problems</li>
-                    <li>Discuss</li>
-                    <li>Profile</li>
-                    <li>Favourite</li>
-                </ul>
-            </div>
-        </div>
-    );
-};
-
-export default Header; */
 import React from "react";
 import { Link } from 'react-router-dom';
 import { Button } from "@mui/material";
@@ -38,6 +14,12 @@ const Logo = () => (
 
 const Header = () => {
     const userEmail=useRecoilValue(userEmailState);
+    const setUser = useSetRecoilState(userState);
+
+    const handleLogout=()=>{
+        localStorage.clear();
+        setUser(null)
+    }
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -78,6 +60,9 @@ const Header = () => {
                     {!userEmail && < Link to={'/register'}>
                         <Button className="filled-button" style={{color:'rgb(64, 68, 70)', textDecoration:'none', marginRight:'20px'}} >Signup</Button>
                     </Link>}
+                    {userEmail &&
+                        <Button onClick={handleLogout} className="filled-button" style={{color:'rgb(64, 68, 70)', textDecoration:'none', marginRight:'20px'}} >Logout</Button>
+                    }
                 </div>
             </div>
         </nav>
