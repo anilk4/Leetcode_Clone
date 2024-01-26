@@ -27,6 +27,7 @@ const loginInput=z.object({
         username: user.username
     })
 });
+
 app.get("/profile",authenticateJwt,  async (req, res) => {
   const user = await User.findOne({ username: req.user.username });
   console.log(user)

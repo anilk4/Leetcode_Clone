@@ -9,6 +9,8 @@ import "ace-builds/src-noconflict/ext-language_tools";
 import "./Compiler.css";
 import { Typography } from "@mui/material";
 
+
+
 function Compiler({selectedProblem}) {
 
 
@@ -19,9 +21,11 @@ function Compiler({selectedProblem}) {
   const [status, setStatus] = useState(null);
   const [data, setData] = useState(null);
   const [finalCode, setFinalCode] = useState("");
-
   const userEmail = useRecoilValue(userEmailState);
-  // setData(selectedProblem);
+
+  console.log("complier call", userEmail);
+ 
+
 
   const userToken = localStorage.getItem("userToken");
 
@@ -103,9 +107,11 @@ function Compiler({selectedProblem}) {
 
   async function handleSubmit() {
     console.log(finalCode);
+    console.log("handlesubmit  call",typeof userEmail);
+    console.log("handle submit usernamesdfghfdsdfgfdsdfg call",typeof userEmail.username);
 
     try {
-      setJobId("");
+      setJobId(""); 
       setStatus("");
       setResult("");
       
