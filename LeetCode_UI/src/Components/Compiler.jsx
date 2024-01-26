@@ -118,7 +118,7 @@ function Compiler({selectedProblem}) {
       // console.log(userEmail)
       console.log(JSON.stringify(selectedProblem.testcase.output))
       const ans = await axios.post("http://localhost:3000/problem/code", {
-        username: userEmail.username,
+        username: userEmail,
         language: language,
         code: finalCode,
         problem_id: selectedProblem.id,
