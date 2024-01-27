@@ -83,31 +83,37 @@ app.post("/run", async (req, res) => {
     console.log("first", jobObject);
 
     // Continue checking if the job is completed and output is available
-    while (jobObject.status !== 'success' || jobObject.output === undefined) {
+    while ((jobObject.status !== 'success' || jobObject.output === undefined) && jobObject.status !== 'error') {
       // Add some delay before checking again (e.g., 1 second)
       await new Promise(resolve => setTimeout(resolve, 1000));
       // Fetch the updated jobObject
       jobObject = await Job.findById(jobId);
+      console.log("inside while loop for syntax error output : ", jobObject.output);
     }
 
-    console.log("Jobobject output : ", jobObject.output);
+
+
+    console.log("outside while loop for syntax error output : ", jobObject.output);
     let json = {};
     let out2 = output // Remove newline characters
     let job2 = jobObject.output.replace(/\s+/g, '').replace(/\]\s*,\s*\[/g, '],[').trim(); // Remove newline characters
+    let result = jobObject.output.replace(/\n\r/g, "");
 
     if (out2 === job2) {
       json = {
         username: username,
         problem_id: problem_id,
         language: language,
-        output: true
+        output: true,
+        result: result
       };
     } else {
       json = {
         username: username,
         problem_id: problem_id,
         language: language,
-        output: false
+        output: false,
+        result: result
       };
     }
 

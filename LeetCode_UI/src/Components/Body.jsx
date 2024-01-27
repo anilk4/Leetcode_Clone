@@ -3,7 +3,7 @@ import Pagination from 'react-bootstrap/Pagination';
 import ProblemCard from "./ProblemCard";
 import { HomeCarousel } from "./HomeCarousel/HomeCarousel";
 import Display from "./DisplayProblem";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import './Panel/Resizable.css';
 import { useDispatch, useSelector } from "react-redux";
 
@@ -16,7 +16,7 @@ const Body = () => {
   const [searchTxt, setSearchTxt] = useState("");
   const [difficultyLevel, setDifficultyLevel] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
-
+  const navigate = useNavigate()   
   const dispatch = useDispatch()
   const data = useSelector(store => store.leetCodeProblems.problems)
 
@@ -125,9 +125,7 @@ const Body = () => {
             {currentData.map((problem) => (
               <tr key={problem.id}>
                 <td>{problem.id}</td>
-                <Link to={`/display/${problem.id}`} className="text-decoration-none text-dark wrap-text d-flex align-items-center">
-                  <td>{problem.title}</td>
-                </Link>
+                  <td style={{cursor:'pointer'}} onClick={()=>navigate(`/display/${problem.id}`)}>{problem.title}</td>
                 <td style={{ color: getTextColor(problem.difficulty) }}>{problem.difficulty}</td>
                 <td>{problem.related_topics}</td>
               </tr>

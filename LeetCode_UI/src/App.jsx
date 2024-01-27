@@ -40,10 +40,10 @@ function App(){
   );
 };
 function InitUser() {
-  const setUser=useSetRecoilState(userState);
-  const init=async()=>{
+  const setUser = useSetRecoilState(userState);
+  const init = async()=>{
     try{
-      const res=await axios.get(`${BASE_URL}/account/me`,{
+      const res = await axios.get(`${BASE_URL}/account/me`,{
         headers: {
           "authorization": "Bearer " + localStorage.getItem("userToken")
       }
@@ -51,7 +51,7 @@ function InitUser() {
       console.log(res.data);
       if(res.data){
         setUser({
-          userEmail:res.data
+          userEmail:res.data.username
         })
       }
       else{
@@ -69,7 +69,7 @@ function InitUser() {
   }
 
   useEffect(()=>{
-    console.log("hii");
+    console.log("Login");
     init();
   },[]);
   return <div></div>
