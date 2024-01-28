@@ -48,7 +48,7 @@ const Header = () => {
                             <a className="nav-link" href='/profile'>Profile</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href='/favourite'>Favourite</a>
+                            <a className="nav-link" href='/favourite'>Leader Board</a>
                         </li>
                     </ul>
                 </div>

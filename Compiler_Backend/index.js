@@ -105,6 +105,7 @@ app.post("/run", async (req, res) => {
         problem_id: problem_id,
         language: language,
         output: true,
+        TimeComplexity: jobObject.TimeComplexity,
         result: result
       };
     } else {
@@ -113,6 +114,7 @@ app.post("/run", async (req, res) => {
         problem_id: problem_id,
         language: language,
         output: false,
+        TimeComplexity: jobObject.TimeComplexity,
         result: result
       };
     }

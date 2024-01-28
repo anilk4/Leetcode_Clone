@@ -7,6 +7,7 @@ import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/ext-language_tools";
 import "./Compiler.css";
+import Terminal from "./terminal.jsx";
 import { Typography } from "@mui/material";
 
 
@@ -17,12 +18,11 @@ function Compiler({selectedProblem}) {
   const [code, setCode] = useState("");
   const [result, setResult] = useState("");
   const [language, setLanguage] = useState("java");
-  const [jobId, setJobId] = useState(null);
-  const [status, setStatus] = useState(null);
   const [data, setData] = useState(null);
   const [finalCode, setFinalCode] = useState("");
   const userEmail = useRecoilValue(userEmailState);
- 
+  const ExpOut =  JSON.stringify(selectedProblem.testcase.output)
+
   const userToken = localStorage.getItem("userToken");
 
   useEffect(() => {
@@ -105,8 +105,6 @@ function Compiler({selectedProblem}) {
     console.log(finalCode);
 
     try {
-      setJobId(""); 
-      setStatus("");
       setResult("");
       
       // console.log(userEmail)
@@ -123,8 +121,9 @@ function Compiler({selectedProblem}) {
           "Content-Type":"application/json"
         }
       });
-      console.log(ans);
-      setJobId(ans.data);
+      
+      setResult(ans);
+      console.log("result setted", result);
 
    } 
     catch ({ response }) {
@@ -178,9 +177,8 @@ function Compiler({selectedProblem}) {
         </div>}
         {!userEmail && <Typography>you need to login first to submit this code</Typography>}
       </div>
-      <p>{status}</p>
-      <p>{jobId ? `Job ID: ${jobId}` : ""}</p>
-      <p>{result}</p>
+      
+        <Terminal Exp = {ExpOut} termi = {result} />
     </>
   );
 }
