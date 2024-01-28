@@ -17,13 +17,15 @@ function Compiler({selectedProblem}) {
 
   const [code, setCode] = useState("");
   const [result, setResult] = useState("");
-  const [language, setLanguage] = useState("java");
+  const [language, setLanguage] = useState(localStorage.getItem("language"));
   const [data, setData] = useState(null);
   const [finalCode, setFinalCode] = useState("");
   const userEmail = useRecoilValue(userEmailState);
   const ExpOut =  JSON.stringify(selectedProblem.testcase.output)
 
   const userToken = localStorage.getItem("userToken");
+  
+  localStorage.setItem("language",language===null?"java":language);
 
   useEffect(() => {
 
@@ -123,7 +125,7 @@ function Compiler({selectedProblem}) {
       });
       
       setResult(ans);
-      console.log("result setted", result);
+      console.log("result setted", ans);
 
    } 
     catch ({ response }) {
@@ -178,7 +180,7 @@ function Compiler({selectedProblem}) {
         {!userEmail && <Typography>you need to login first to submit this code</Typography>}
       </div>
       
-        <Terminal Exp = {ExpOut} termi = {result} />
+        {result && <Terminal Exp = {ExpOut} termi = {result} />}
     </>
   );
 }
