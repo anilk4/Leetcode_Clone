@@ -20,6 +20,9 @@ const JobSchema = mongoose.Schema({
   completedAt: {
     type: Date,
   },
+  TimeComplexity: {
+     type: Number,
+  },
   status: {
     type: String,
     default: "pending",
