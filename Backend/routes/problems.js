@@ -107,11 +107,9 @@ app.post('/code', authenticateJwt, async (req, res) => {
       if (updatedUser || newUser) {
         return res.json({ data : response.data, msg: "user submitted code successfully" });
       } else {
-        return res.status(404).json({ data : response.data, msg: "some test cases are failed" });
+        return res.json({ data : response.data, msg: "compilation error" });
       }
     
-
-    return res.status(200).json(response.data);
   } catch (error) {
     console.error('Error processing data in frontend:', error.message);
     return res.status(500).json({ msg: 'Internal Server Error' });

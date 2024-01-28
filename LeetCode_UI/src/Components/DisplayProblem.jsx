@@ -14,7 +14,7 @@ const Display = () => {
   console.log("display data: ", data);
 
   async function getData() {
-    const selectedProblem = data.problems.find(prob => prob.id === parseInt(id));
+    const selectedProblem = data.problems?.find(prob => prob.id === parseInt(id));
     console.log("selectedProblem: ", selectedProblem);
 
     setData(selectedProblem || {});

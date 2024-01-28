@@ -22,11 +22,7 @@ function Compiler({selectedProblem}) {
   const [data, setData] = useState(null);
   const [finalCode, setFinalCode] = useState("");
   const userEmail = useRecoilValue(userEmailState);
-
-  console.log("complier call", userEmail);
  
-
-
   const userToken = localStorage.getItem("userToken");
 
   useEffect(() => {
@@ -107,8 +103,6 @@ function Compiler({selectedProblem}) {
 
   async function handleSubmit() {
     console.log(finalCode);
-    console.log("handlesubmit  call",typeof userEmail);
-    console.log("handle submit usernamesdfghfdsdfgfdsdfg call",typeof userEmail.username);
 
     try {
       setJobId(""); 
@@ -132,32 +126,10 @@ function Compiler({selectedProblem}) {
       console.log(ans);
       setJobId(ans.data);
 
-    //   let interval = setInterval(async () => {
-    //     const { data: statusRes } = await axios.get(
-    //       "http://localhost:5000/status",
-    //       {
-    //         params: { id: ans.data.jobId },
-    //       }
-    //     );
-    //     const { success, job, error } = statusRes;
-    //     console.log(statusRes);
-
-    //     if (success) {
-    //       const { status: jobStatus, output: jobOutput } = job;
-    //       setStatus(jobStatus);
-    //       if (jobStatus === "pending") return;
-    //       setResult(jobOutput);
-    //       clearInterval(interval);
-    //     } else {
-    //       console.error(error);
-    //       setResult(error);
-    //       setStatus("Bad request");
-    //       clearInterval(interval);
-    //     }
-    //   }, 1000);
    } 
     catch ({ response }) {
       if (response) {
+        console.log(response)
         const errorMessage = response.data.response;
         setResult(errorMessage);
       } else {
