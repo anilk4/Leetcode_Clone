@@ -21,7 +21,8 @@ function Compiler({selectedProblem}) {
   const [data, setData] = useState(null);
   const [finalCode, setFinalCode] = useState("");
   const userEmail = useRecoilValue(userEmailState);
-  const ExpOut =  JSON.stringify(selectedProblem.testcase.output)
+  const ExpOut =  JSON.stringify(selectedProblem?.testcase?.output)
+
 
   const userToken = localStorage.getItem("userToken");
   
@@ -29,19 +30,19 @@ function Compiler({selectedProblem}) {
 
   useEffect(() => {
 
-        const codePython = selectedProblem.testcase.py;
-        const codeCPP = selectedProblem.testcase.cpp;
-        const codeJava = selectedProblem.testcase.java;
-        const codejs = selectedProblem.testcase.js;
+        const codePython = selectedProblem?.testcase?.py;
+        const codeCPP = selectedProblem?.testcase?.cpp;
+        const codeJava = selectedProblem?.testcase?.java;
+        const codejs = selectedProblem?.testcase?.js;
 
         if (language === "py") {
-          setCode(codePython.user_code || "");
+          setCode(codePython?.user_code || "");
         } else if (language === "java") {
-          setCode(codeJava.user_code || "");
+          setCode(codeJava?.user_code || "");
         } else if (language === "cpp") {
-          setCode(codeCPP.user_code || "");
+          setCode(codeCPP?.user_code || "");
         } else {
-          setCode(codejs.user_code || "");
+          setCode(codejs?.user_code || "");
         }
  
     }
@@ -110,7 +111,7 @@ function Compiler({selectedProblem}) {
       setResult("");
       
       // console.log(userEmail)
-      console.log(JSON.stringify(selectedProblem.testcase.output))
+      
       const ans = await axios.post("http://localhost:3000/problem/code", {
         username: userEmail,
         language: language,
