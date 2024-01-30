@@ -7,6 +7,7 @@ import Favourites from './Components/Favourites';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Body from './Components/Body';
+import NavHeader from './Components/NavHeader';
 import Display from './Components/DisplayProblem';
 import Login from './Components/Login';
 import Register from './Components/Register';
@@ -22,7 +23,8 @@ function App(){
     <RecoilRoot>
     <Router>
     <InitUser/>
-      <Header />
+      {/* <Header /> */}
+      <NavHeader />
       
       <Routes>
         <Route path='/' element={<Body  />} />
