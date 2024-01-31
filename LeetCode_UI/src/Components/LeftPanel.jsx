@@ -18,7 +18,7 @@ function LeftPanel({ data }) {
   };
 
   return (
-    <div /* className="left-panel" */ className="bg-light p-3">
+    <div className="p-3" style={{background:'black',color:'white'}}>
       <h1>{data.title}</h1>
       <div>{renderDescription(data.description)}</div>
 

@@ -4,8 +4,8 @@ import AceEditor from "react-ace";
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { userEmailState } from '../store/selector/userEmail.js';
 import "ace-builds/src-noconflict/mode-javascript";
-// import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/theme-chaos";
+import "ace-builds/src-noconflict/theme-vibrant_ink";
 import "ace-builds/src-noconflict/ext-language_tools";
 import "./Compiler.css";
 import { Typography } from "@mui/material";
@@ -165,7 +165,7 @@ function Compiler({selectedProblem}) {
           width="100%"
           value={code}
           mode="javascript"
-          theme="chaos"
+          theme="vibrant_ink"
           fontSize="14px"
           highlightActiveLine={true}
           setOptions={{
