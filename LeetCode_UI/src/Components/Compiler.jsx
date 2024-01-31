@@ -4,11 +4,12 @@ import AceEditor from "react-ace";
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { userEmailState } from '../store/selector/userEmail.js';
 import "ace-builds/src-noconflict/mode-javascript";
-import "ace-builds/src-noconflict/theme-monokai";
+// import "ace-builds/src-noconflict/theme-monokai";
+import "ace-builds/src-noconflict/theme-chaos";
 import "ace-builds/src-noconflict/ext-language_tools";
 import "./Compiler.css";
-import Terminal from "./terminal.jsx";
 import { Typography } from "@mui/material";
+import Terminal from "./Terminal.jsx";
 
 
 
@@ -160,12 +161,12 @@ function Compiler({selectedProblem}) {
         </div>
         <AceEditor
           className="ace-editor"
-          height="500px"
+          height="400px"
           width="100%"
           value={code}
           mode="javascript"
-          theme="monokai"
-          fontSize="16px"
+          theme="chaos"
+          fontSize="14px"
           highlightActiveLine={true}
           setOptions={{
             enableLiveAutocompletion: true,
