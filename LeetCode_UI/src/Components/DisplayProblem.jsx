@@ -13,7 +13,8 @@ const Display = () => {
   const { id } = useParams();
   const [Data, setData] = useState({});
   const data = useSelector((store) => store.leetCodeProblems.problems);
-
+  const [isMobileView,setIsMobileView] = useState(false)
+  console.log(window.innerWidth)
   console.log("display data: ", data);
 
   async function getData() {
@@ -29,12 +30,37 @@ const Display = () => {
     getData();
   }, [id, data]);
 
+  useEffect(()=>{
+    const handleResize = () => {
+      // console.log("changing width ", window.innerWidth);
+      setIsMobileView(window.innerWidth <= 700);
+    };
+    handleResize();
+    window.onresize = handleResize;
+    return () => {
+      window.onresize = null;
+    };
+  },[])
+
+  if (isMobileView) {
+    // Render stacked layout for mobile view
+    return (
+      <div className="container-fluid p-0">
+        <div className="border-right p-0" style={{ wordWrap: "break-word" }}>
+          {Data.id && <LeftPanel data={Data}></LeftPanel>}
+        </div>
+        <div className="p-0">{Data.id && <RightPanel data={Data} />}</div>
+      </div>
+    );
+  }
+
+  // Render Splitter for non-mobile view
   return (
     <div className="container-fluid p-0">
-      <Splitter style={{ height: '100%'}}>
+      <Splitter style={{ height: '100%' }}>
         {/* Left side: Problem Description */}
         <SplitterPanel style={{ overflow: 'auto' }}>
-          <div className="border-right p-0 " style={{ wordWrap: "break-word" }}>
+          <div className="border-right p-0" style={{ wordWrap: "break-word" }}>
             {Data.id && <LeftPanel data={Data}></LeftPanel>}
           </div>
         </SplitterPanel>
