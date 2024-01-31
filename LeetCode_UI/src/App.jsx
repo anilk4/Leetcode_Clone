@@ -24,7 +24,7 @@ function App(){
     <Router>
     <InitUser/>
       {/* <Header /> */}
-      <NavHeader className="h-25 p-0"/>
+      <NavHeader className="h-25"/>
       
       <Routes>
         <Route path='/' element={<Body  />} />

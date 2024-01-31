@@ -41,7 +41,7 @@ const Terminal = (props) => {
             let index = str?.indexOf("\r");
             let res = str?.substring(0, index);
             setError(res || "");
-            console.log("Else block", res);
+            console.log("incorrect output", res);
         }
     }, []);
 
@@ -54,7 +54,10 @@ const Terminal = (props) => {
                     </ul>
                 ))
             ) : (
-                <div>{error}</div>
+                <>
+                <div>Wrong Output: </div>
+                <div style={{color:'red'}} className="mx-5 ">{error}</div>
+                </>
             )}
         </div>
     );
