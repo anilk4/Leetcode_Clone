@@ -57,7 +57,7 @@ const Display = () => {
   // Render Splitter for non-mobile view
   return (
     <div className="container-fluid p-0">
-      <Splitter style={{ height: '100%' }}>
+      <Splitter className="vh-100 ">
         {/* Left side: Problem Description */}
         <SplitterPanel style={{ overflow: 'auto' }}>
           <div className="border-right pe-2" style={{ wordWrap: "break-word" }}>

@@ -6,9 +6,8 @@ import "ace-builds/src-noconflict/ext-language_tools";
 import Compiler from "./Compiler";
 
 function RightPanel({data}) {
-  // const code = "var message = 'Monaco Editor!' \nconsole.log(message);";
   return (
-    <div /* className="right-panel" */ className="bg-dark text-light p-3 h-100">
+    <div /* className="right-panel" */ className=" px-2 text-light vh-100 " style={{background:"black"}}>
       <Compiler selectedProblem={data}></Compiler>
       {/* <AceEditor
         className="ace-editor"

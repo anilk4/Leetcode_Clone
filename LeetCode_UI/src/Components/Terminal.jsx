@@ -38,6 +38,7 @@ const Terminal = (props) => {
         } else {
             setIsSuccess(false);
             let str = status?.data?.result;
+            console.log(str);
             let index = str?.indexOf("\r");
             let res = str?.substring(0, index);
             setError(res || "");
