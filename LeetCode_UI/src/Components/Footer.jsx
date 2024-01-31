@@ -2,11 +2,14 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="page-footer font-small blue pt-5 " style={{background:"black",color:"white"}}>
+    <footer className="page-footer font-small blue pt-5 " style={{background:"#262020",color:"white"}}>
       <div className="container-fluid text-center text-md-left">
         <div className="row">
-          <div className="col-md-6 mt-md-0 mt-3">
-            <h5 className="text-uppercase">Treat Code</h5>
+          <div className="col-md-1 mt-md-0 mt-3">
+          <img className="logo" alt='logo' src='https://shorturl.at/flCS0' style={{ maxWidth: '250px', maxHeight: '150px' }} />
+          </div>
+          <div className="col-md-5 mt-md-0 mt-3">
+            <h5 className="text-uppercase" style={{fontFamily:'Comic Sans MS, Comic Sans, cursive',fontSize:'xx-large'}}>Treat Code</h5>
             <p>
               Teat code is a clone of LeetCode; code and enjoy its features.
             </p>

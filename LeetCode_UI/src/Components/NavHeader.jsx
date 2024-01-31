@@ -24,22 +24,22 @@ const NavHeader = () => {
 
     return (
         <div>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav className="navbar navbar-expand-lg navbar-dark  bg-dark">
 
-                <div class="container">
+                <div className="container-fluid mx-0">
                     <Logo />
-                    <a class="navbar-brand shadow-none fs-5 border-0" click="false">LeetCode</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+                    <a className="navbar-brand shadow-none fs-5 border-0" click="false" style={{fontFamily:'Comic Sans MS, Comic Sans, cursive',fontSize:'xx-large'}}>TREAT CODE</a>
+                    <button className="navbar-toggler ms-auto " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
                     </button>
 
-                    <div class="sidebar offcanvas offcanvas-start" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-                        <div class="offcanvas-header text-light border-bottom bg-dark">
-                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
-                            <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    <div className="sidebar offcanvas offcanvas-start" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                        <div className="offcanvas-header text-light border-bottom bg-dark">
+                            <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                            <button type="button" className="btn-close btn-close-white shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
-                        <div class="offcanvas-body bg-dark d-flex flex-column p-0">
-                            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <div className="offcanvas-body bg-dark d-flex flex-column p-0">
+                            <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                                 <ul className="navbar-nav ml-auto ">
                                     <li className="nav-item mx-2">
                                         <a className="nav-link" href='/'>Problems</a>
@@ -54,16 +54,18 @@ const NavHeader = () => {
                                         <a className="nav-link" href='/favourite'>Leader Board</a>
                                     </li>
                                     <li >
-                                        {/* <img src={sun} style={{display:'inline-block', verticalAlign:'middle', marginBottom:'10px', marginRight:'20px',width:'25px', cursor:'pointer'}} onClick={handleClick}></img> */}
+                                    <div className="btn-group" role="group" aria-label="Basic mixed styles example">
+
                                         {!userEmail && <Link to={'/login'}>
-                                            <Button className='login-button' class="btn btn-success text-white mx-2" style={{ textDecoration: 'none' }}>Login</Button>
+                                            <Button type="button" className="login-button btn btn-success text-white mx-2" style={{ textDecoration: 'none' }}>Login</Button>
                                         </Link>}
                                         {!userEmail && < Link to={'/register'}>
-                                            <Button className="filled-button" class="btn btn-primary text-white" style={{ color: 'rgb(64, 68, 70)', textDecoration: 'none', marginRight: '20px' }} >Signup</Button>
+                                            <Button type="button" className="btn btn-primary text-white" style={{ color: 'rgb(64, 68, 70)', textDecoration: 'none', marginRight: '20px' }} >SignUp</Button>
                                         </Link>}
                                         {userEmail &&
-                                            <Button onClick={handleLogout} class="btn btn-danger text-white" className="filled-button" style={{ color: 'rgb(64, 68, 70)', textDecoration: 'none', marginRight: '20px' }} >Logout</Button>
+                                            <Button type="button" onClick={handleLogout} className="btn btn-danger text-white" style={{ color: 'rgb(64, 68, 70)', textDecoration: 'none', marginRight: '20px' }} >Logout</Button>
                                         }
+                                        </div>
                                     </li>
                                 </ul>
                             </ul>
