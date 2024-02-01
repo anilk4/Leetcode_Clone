@@ -45,7 +45,7 @@ const Display = () => {
   if (isMobileView) {
     // Render stacked layout for mobile view
     return (
-      <div className="container-fluid p-0">
+      <div className="container-fluid p-0 bg-dark">
         <div className="border-right pb-2" style={{ wordWrap: "break-word" }}>
           {Data.id && <LeftPanel data={Data}></LeftPanel>}
         </div>
@@ -57,10 +57,10 @@ const Display = () => {
   // Render Splitter for non-mobile view
   return (
     <div className="container-fluid p-0">
-      <Splitter className="vh-100 ">
+      <Splitter className="vh-100 " style={{border:"none"}} >
         {/* Left side: Problem Description */}
-        <SplitterPanel style={{ overflow: 'auto' }}>
-          <div className="border-right pe-2" style={{ wordWrap: "break-word" }}>
+        <SplitterPanel style={{ overflow: 'auto'}}>
+          <div className="border-right" style={{ wordWrap: "break-word" }}>
             {Data.id && <LeftPanel data={Data}></LeftPanel>}
           </div>
         </SplitterPanel>
