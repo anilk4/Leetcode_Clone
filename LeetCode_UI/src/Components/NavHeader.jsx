@@ -51,7 +51,7 @@ const NavHeader = () => {
                                         <a className="nav-link" href='/profile'>Profile</a>
                                     </li>
                                     <li className="nav-item mx-2">
-                                        <a className="nav-link" href='/favourite'>Leader Board</a>
+                                        <a className="nav-link" href='/favorite'>Leader Board</a>
                                     </li>
                                     <li >
                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
@@ -60,7 +60,7 @@ const NavHeader = () => {
                                             <Button type="button" className="login-button btn btn-success text-white mx-2" style={{ textDecoration: 'none' }}>Login</Button>
                                         </Link>}
                                         {!userEmail && < Link to={'/register'}>
-                                            <Button type="button" className="btn btn-primary text-white" style={{ color: 'rgb(64, 68, 70)', textDecoration: 'none', marginRight: '20px' }} >SignUp</Button>
+                                            <Button type="button" className="btn btn-primary text-white " style={{ color: 'rgb(64, 68, 70)', textDecoration: 'none', marginRight: '20px' }} >SignUp</Button>
                                         </Link>}
                                         {userEmail &&
                                             <Button type="button" onClick={handleLogout} className="btn btn-danger text-white" style={{ color: 'rgb(64, 68, 70)', textDecoration: 'none', marginRight: '20px' }} >Logout</Button>
