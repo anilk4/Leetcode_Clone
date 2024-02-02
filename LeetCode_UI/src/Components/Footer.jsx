@@ -71,11 +71,11 @@ const Footer = () => {
                 <li>
                   <a className="text-decoration-none " href="#!">
                     Security
-                  </a>
+                    AP                  </a>
                 </li>
                 <li>
                   <a className="text-decoration-none " href="#!">
-                    API
+                    I
                   </a>
                 </li>
               </ul>

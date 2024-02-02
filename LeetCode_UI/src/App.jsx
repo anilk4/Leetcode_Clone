@@ -16,6 +16,7 @@ import { RecoilRoot, useSetRecoilState } from "recoil";
 import { BASE_URL } from "./config";
 import axios from "axios";
 
+
 const LazyProfile = lazy(() => import("./Components/UserProfile"));
 
 const MinHeightWrapper = ({ children }) => {
