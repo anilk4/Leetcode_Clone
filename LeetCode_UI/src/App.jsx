@@ -15,6 +15,8 @@ import { userState } from "./store/atoms/user";
 import { RecoilRoot, useSetRecoilState } from "recoil";
 import { BASE_URL } from "./config";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.css";
+
 
 const LazyProfile = lazy(() => import("./Components/UserProfile"));
 

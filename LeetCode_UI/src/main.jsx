@@ -8,6 +8,7 @@ import { store } from './redux/store.js';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getProblems } from "../src/redux/reducers/problemReducer.js";
 
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <Init />

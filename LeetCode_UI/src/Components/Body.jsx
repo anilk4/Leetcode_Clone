@@ -115,8 +115,8 @@ const Body = () => {
         </div>
       </div>
 
-<div className="" style={{ padding: "0 100px"}}>
-  <table className="table table-bordered table-striped">
+<div style={{ padding: "0 100px"}}>
+  <table className="table table-bordered table-striped table-dark">
     <thead>
       <tr>
         <th>Id</th>
