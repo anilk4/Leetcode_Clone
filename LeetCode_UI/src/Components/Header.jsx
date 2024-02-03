@@ -5,9 +5,6 @@ import { Button } from "@mui/material";
 import { userEmailState } from '../store/selector/userEmail'
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { userState } from '../store/atoms/user';
-import { red } from "@mui/material/colors";
-import './Sidebar.css'
-
 
 const Logo = () => (
     <a className="navbar-brand" href='/'>
