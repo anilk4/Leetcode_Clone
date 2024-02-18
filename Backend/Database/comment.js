@@ -9,7 +9,7 @@ try{
 const CommentSchema = new mongoose.Schema({
     id: String,
     body: String,
-    parentId: Number,
+    parentId: String,
     userId: String,
     userName:String,
     createdDate:Date

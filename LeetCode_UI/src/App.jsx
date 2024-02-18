@@ -69,7 +69,7 @@ const App = () => {
             path="/discuss"
             element={
               <MinHeightWrapper>
-                <Comments currentUserId="1" />
+                <Comments currentUserId={localStorage.getItem('userId')} />
               </MinHeightWrapper>
             }
           />
@@ -114,7 +114,15 @@ function InitUser() {
           authorization: "Bearer " + localStorage.getItem("userToken"),
         },
       });
-      console.log(res.data);
+      const user = await axios.get(`${BASE_URL}/account/profile`, {
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("userToken"),
+        },
+      });
+      console.log(user.data);
+      if(user){
+        localStorage.setItem('userId',user.data.user._id)
+      }
       if (res.data) {
         setUser({
           userEmail: res.data.username,
