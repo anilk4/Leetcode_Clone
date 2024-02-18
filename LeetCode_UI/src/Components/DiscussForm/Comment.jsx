@@ -20,7 +20,7 @@ const Comment = ({
     activeComment &&
     activeComment.id === comment.id &&
     activeComment.type === "replying";
-  const fiveMinutes = 300000;
+  const fiveMinutes = 600000;
   const timePassed = new Date() - new Date(comment.createdDate) > fiveMinutes;
   const canDelete =
     currentUserId === comment.userId && replies.length === 0 && !timePassed;

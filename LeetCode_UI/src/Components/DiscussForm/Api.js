@@ -74,10 +74,37 @@ export const createComment = async (text, parentId = null) => {
   }
 };
 
-export const updateComment = async (text) => {
-  return { text };
+export const updateComment = async (text,commentId) => {
+  if (!token) {
+    console.error("User token is not available");
+    return;
+  }
+  const response = await axios.put(
+    `${BASE_URL}/comment/updateComment/${commentId}`,
+    {text},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  console.log(response);
+  return response
 };
 
-export const deleteComment = async () => {
-  return {};
+export const deleteComment = async (commentId) => {
+  if (!token) {
+    console.error("User token is not available");
+    return;
+  }
+  const response = await axios.delete(
+    `${BASE_URL}/comment/deleteComment/${commentId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  console.log(response);
+  return response
 };
