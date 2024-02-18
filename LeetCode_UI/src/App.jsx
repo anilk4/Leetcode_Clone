@@ -11,6 +11,8 @@ import NavHeader from "./Components/NavHeader";
 import Display from "./Components/DisplayProblem";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
+import UserProfile from "./Components/UserProfile";
+import Comments from "./Components/DiscussForm/Comments"
 import { userState } from "./store/atoms/user";
 import { RecoilRoot, useSetRecoilState } from "recoil";
 import { BASE_URL } from "./config";
@@ -43,7 +45,7 @@ const App = () => {
             path="/profile"
             element={
               <MinHeightWrapper>
-                <Discuss />
+                <UserProfile />
               </MinHeightWrapper>
             }
           />
@@ -67,7 +69,7 @@ const App = () => {
             path="/discuss"
             element={
               <MinHeightWrapper>
-                <Discuss />
+                <Comments currentUserId="1" />
               </MinHeightWrapper>
             }
           />
