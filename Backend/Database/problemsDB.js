@@ -1,12 +1,5 @@
 const mongoose = require("mongoose");
 
-try{
-    mongoose.connect(
-        "mongodb+srv://anilkumarkclk:1AY18ec%4010@cluster0.rzxbmn9.mongodb.net/Leetcode"
-      );
-}catch(err){
-    console.log(err);
-}
 
 const ProblemSchema = new mongoose.Schema({
   id: Number,
