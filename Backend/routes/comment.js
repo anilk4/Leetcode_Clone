@@ -15,4 +15,13 @@ app.post("/addComment", async (req, res) => {
     }
 });
 
+app.get("/getAllComment",async (req,res)=>{
+    try{
+       const comments =await Comment.find()
+       return res.status(200).json({comments})
+    }catch(error){
+        return res.status(500).json({"message":"internal server error"})
+    }
+})
+
 module.exports = app;

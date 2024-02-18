@@ -8,32 +8,32 @@ import {
   updateComment as updateCommentApi,
   deleteComment as deleteCommentApi,
 } from "./Api";
-import { BASE_URL } from "../../config";
 
 const Comments = ({ commentsUrl, currentUserId }) => {
   const [backendComments, setBackendComments] = useState([]);
   const [activeComment, setActiveComment] = useState(null);
-  const rootComments = backendComments.filter(
-    (backendComment) => backendComment?.parentId === null
-  );
- 
-
+  
+  const rootComments = backendComments.length>0?backendComments.filter(
+    backendComment => backendComment?.parentId === null
+  ):[];
+  console.log(backendComments,rootComments);
   const getReplies = (commentId) =>
     backendComments
-      .filter((backendComment) => backendComment?.parentId === commentId)
+      .filter(backendComment => backendComment?.parentId === commentId)
       .sort(
         (a, b) =>
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
       );
+
   const addComment = (text, parentId) => {
     createCommentApi(text, parentId).then((comment) => {
-      setBackendComments([comment, ...backendComments]);
+      setBackendComments(prevComments => [comment, ...prevComments]);
       setActiveComment(null);
     });
   };
 
   const updateComment = (text, commentId) => {
-    updateCommentApi(text).then(() => {
+    updateCommentApi(text, commentId).then(() => {
       const updatedBackendComments = backendComments.map((backendComment) => {
         if (backendComment.id === commentId) {
           return { ...backendComment, body: text };
@@ -44,9 +44,10 @@ const Comments = ({ commentsUrl, currentUserId }) => {
       setActiveComment(null);
     });
   };
+
   const deleteComment = (commentId) => {
     if (window.confirm("Are you sure you want to remove comment?")) {
-      deleteCommentApi().then(() => {
+      deleteCommentApi(commentId).then(() => {
         const updatedBackendComments = backendComments.filter(
           (backendComment) => backendComment.id !== commentId
         );
@@ -55,11 +56,10 @@ const Comments = ({ commentsUrl, currentUserId }) => {
     }
   };
 
-  
-
   useEffect(() => {
     getCommentsApi().then((data) => {
-      setBackendComments(data);
+      console.log(data);
+      setBackendComments(data.data.comments);
     });
   }, []);
 

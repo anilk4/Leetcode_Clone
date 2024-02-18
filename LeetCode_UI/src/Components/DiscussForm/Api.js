@@ -23,44 +23,21 @@ const getUserDetails = async () => {
 };
 
 export const getComments = async () => {
-  // Get the current date and time
-  const currentDate = new Date();
-  const formattedDate = currentDate.toISOString();
+  if (!token) {
+    console.error("User token is not available");
+    return;
+  }
+  const response = await axios.get(
+    `${BASE_URL}/comment/getAllComment`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  console.log(response);
+  return response
 
-  return [
-    {
-      id: "1",
-      body: "First comment",
-      username: "Jack",
-      userId: "1",
-      parentId: null,
-      createdAt: formattedDate,
-    },
-    {
-      id: "2",
-      body: "Second comment",
-      username: "John",
-      userId: "2",
-      parentId: null,
-      createdAt: formattedDate,
-    },
-    {
-      id: "3",
-      body: "First comment first child",
-      username: "John",
-      userId: "2",
-      parentId: "1",
-      createdAt: formattedDate,
-    },
-    {
-      id: "4",
-      body: "Second comment second child",
-      username: "John",
-      userId: "2",
-      parentId: "2",
-      createdAt: formattedDate,
-    },
-  ];
 };
 
 export const createComment = async (text, parentId = null) => {
