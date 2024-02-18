@@ -22,7 +22,7 @@ const Comments = ({ commentsUrl, currentUserId }) => {
       .filter(backendComment => backendComment?.parentId === commentId)
       .sort(
         (a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime()
       );
 
   const addComment = (text, parentId) => {
