@@ -1,9 +1,7 @@
 import axios from "axios";
 import { BASE_URL } from "../../config";
 
-const token = localStorage.getItem("userToken");
-
-const getUserDetails = async () => {
+const getUserDetails = async (token) => {
   try {
     if (!token) {
       console.error("User token is not available");
@@ -22,7 +20,7 @@ const getUserDetails = async () => {
   }
 };
 
-export const getComments = async () => {
+export const getComments = async (token) => {
   if (!token) {
     console.error("User token is not available");
     return;
@@ -40,7 +38,7 @@ export const getComments = async () => {
 
 };
 
-export const createComment = async (text, parentId = null) => {
+export const createComment = async (text, parentId = null,token) => {
   let res = await getUserDetails();
   if (!res) {
     return;
@@ -74,7 +72,7 @@ export const createComment = async (text, parentId = null) => {
   }
 };
 
-export const updateComment = async (text,commentId) => {
+export const updateComment = async (text,commentId,token) => {
   if (!token) {
     console.error("User token is not available");
     return;
@@ -92,7 +90,7 @@ export const updateComment = async (text,commentId) => {
   return response
 };
 
-export const deleteComment = async (commentId) => {
+export const deleteComment = async (commentId,token) => {
   if (!token) {
     console.error("User token is not available");
     return;

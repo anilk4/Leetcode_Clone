@@ -10,6 +10,8 @@ import {
 } from "./Api";
 
 const Comments = ({ commentsUrl, currentUserId }) => {
+  const [token,setToken] = useState(localStorage.getItem("userToken"));
+
   const [backendComments, setBackendComments] = useState([]);
   const [activeComment, setActiveComment] = useState(null);
   
@@ -26,14 +28,14 @@ const Comments = ({ commentsUrl, currentUserId }) => {
       );
 
   const addComment = (text, parentId) => {
-    createCommentApi(text, parentId).then((comment) => {
+    createCommentApi(text, parentId,token).then((comment) => {
       setBackendComments(prevComments => [comment, ...prevComments]);
       setActiveComment(null);
     });
   };
 
   const updateComment = (text, commentId) => {
-    updateCommentApi(text, commentId).then(() => {
+    updateCommentApi(text, commentId,token).then(() => {
       const updatedBackendComments = backendComments.map((backendComment) => {
         if (backendComment.id === commentId) {
           return { ...backendComment, body: text };
@@ -47,7 +49,7 @@ const Comments = ({ commentsUrl, currentUserId }) => {
 
   const deleteComment = (commentId) => {
     if (window.confirm("Are you sure you want to remove comment?")) {
-      deleteCommentApi(commentId).then(() => {
+      deleteCommentApi(commentId,token).then(() => {
         const updatedBackendComments = backendComments.filter(
           (backendComment) => backendComment.id !== commentId
         );
@@ -57,11 +59,12 @@ const Comments = ({ commentsUrl, currentUserId }) => {
   };
 
   useEffect(() => {
-    getCommentsApi().then((data) => {
+    getCommentsApi(token).then((data) => {
       console.log(data);
       setBackendComments(data.data.comments);
     });
-  }, []);
+    setToken(localStorage.getItem("userToken"))
+  }, [token]);
 
   return (
     <div className="comments">
