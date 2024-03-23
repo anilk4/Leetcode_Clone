@@ -39,7 +39,7 @@ export const getComments = async (token) => {
 };
 
 export const createComment = async (text, parentId = null,token) => {
-  let res = await getUserDetails();
+  let res = await getUserDetails(token);
   if (!res) {
     return;
   }
