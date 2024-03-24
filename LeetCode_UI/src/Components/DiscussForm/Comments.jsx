@@ -10,60 +10,54 @@ import {
 } from "./Api";
 
 const Comments = ({ commentsUrl, currentUserId }) => {
-  const [token,setToken] = useState(localStorage.getItem("userToken"));
-
+  const [token, setToken] = useState(localStorage.getItem("userToken"));
   const [backendComments, setBackendComments] = useState([]);
   const [activeComment, setActiveComment] = useState(null);
-  
-  const rootComments = backendComments.length>0?backendComments.filter(
-    backendComment => backendComment?.parentId === null
-  ):[];
-  console.log(backendComments,rootComments);
+
+  const rootComments = backendComments.filter(
+    (backendComment) => backendComment?.parentId === null
+  );
+
   const getReplies = (commentId) =>
     backendComments
-      .filter(backendComment => backendComment?.parentId === commentId)
+      .filter((backendComment) => backendComment?.parentId === commentId)
       .sort(
         (a, b) =>
           new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime()
       );
 
   const addComment = (text, parentId) => {
-    createCommentApi(text, parentId,token).then((comment) => {
-      setBackendComments(prevComments => [comment, ...prevComments]);
+    createCommentApi(text, parentId, token).then((comment) => {
+      // After adding a new comment, fetch all comments again
+      fetchComments();
       setActiveComment(null);
     });
   };
 
   const updateComment = (text, commentId) => {
-    updateCommentApi(text, commentId,token).then(() => {
-      const updatedBackendComments = backendComments.map((backendComment) => {
-        if (backendComment.id === commentId) {
-          return { ...backendComment, body: text };
-        }
-        return backendComment;
-      });
-      setBackendComments(updatedBackendComments);
+    updateCommentApi(text, commentId, token).then(() => {
+      fetchComments();
       setActiveComment(null);
     });
   };
 
   const deleteComment = (commentId) => {
     if (window.confirm("Are you sure you want to remove comment?")) {
-      deleteCommentApi(commentId,token).then(() => {
-        const updatedBackendComments = backendComments.filter(
-          (backendComment) => backendComment.id !== commentId
-        );
-        setBackendComments(updatedBackendComments);
+      deleteCommentApi(commentId, token).then(() => {
+        fetchComments();
       });
     }
   };
 
-  useEffect(() => {
+  const fetchComments = () => {
     getCommentsApi(token).then((data) => {
-      console.log(data);
       setBackendComments(data.data.comments);
     });
-    setToken(localStorage.getItem("userToken"))
+  };
+
+  useEffect(() => {
+    fetchComments();
+    setToken(localStorage.getItem("userToken"));
   }, [token]);
 
   return (
