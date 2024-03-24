@@ -1,5 +1,8 @@
 import { useState } from "react";
 import "./Style.css"
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Import Quill styles
+
 
 const CommentForm = ({
   handleSubmit,
@@ -12,16 +15,16 @@ const CommentForm = ({
   const isTextareaDisabled = text.length === 0;
   const onSubmit = (event) => {
     event.preventDefault();
-    handleSubmit(text);
-    setText("");
+    if (text.trim() !== "") {
+      handleSubmit(text);
+      setText("");
+    }
   };
   return (
     <form onSubmit={onSubmit}>
-      <textarea
-        className="comment-form-textarea"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
+      <div style={{ marginBottom: "50px" }}>
+        <ReactQuill value={text}style={{height:"100px"}} onChange={setText} theme="snow" />
+      </div>
       <button className="comment-form-button" disabled={isTextareaDisabled}>
         {submitLabel}
       </button>

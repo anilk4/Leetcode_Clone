@@ -38,7 +38,12 @@ const Comment = ({
           <div className="comment-author">{comment.userName}</div>
           <div>{createdAt}</div>
         </div>
-        {!isEditing && <div className="comment-text">{comment.body}</div>}
+        {!isEditing && <div
+            className="comment-text"
+            dangerouslySetInnerHTML={{
+              __html: comment.body,
+            }}
+          />}
         {isEditing && (
           <CommentForm
             submitLabel="Update"
