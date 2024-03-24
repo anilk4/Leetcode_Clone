@@ -51,7 +51,9 @@ const Comments = ({ commentsUrl, currentUserId }) => {
 
   const fetchComments = () => {
     getCommentsApi(token).then((data) => {
-      setBackendComments(data.data.comments);
+      const ReversedComments = data.data.comments.reverse();
+      setBackendComments(ReversedComments);
+      console.log('All backend comments',backendComments);
     });
   };
 
