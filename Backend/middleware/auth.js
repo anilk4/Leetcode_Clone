@@ -3,13 +3,17 @@ const SECRET = 'Leetcode';  // This should be in an environment variable in a re
 
 const authenticateJwt = (req, res, next) => {
   const authHeader = req.headers.authorization;
+  // console.log(authHeader);
+
   if (authHeader) {
     const token = authHeader.split(' ')[1];
+    // console.log(token);
     jwt.verify(token, SECRET, (err, user) => {
       if (err) {
         return res.sendStatus(403);
       }
       req.user = user;
+      // console.log(user)
       next();
     });
   } else {

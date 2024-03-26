@@ -1,10 +1,11 @@
 const Queue = require("bull");
-const jobQueue = new Queue("job-queue");
+const jobQueue = new Queue("job-runner-queue");
 const Job = require("./models/job");
 
 const { executeJava } = require("./executeJava");
 const { executePython } = require("./executePython");
 const { executeJS } = require("./executeJavascript");
+const {executeCpp } = require("./executeCpp")
 
 const NUM_WORKS = 5;
 
@@ -19,7 +20,8 @@ jobQueue.process(NUM_WORKS, async ({ data }) => {
 
   try {
     let output;
-    job["startedAt"] = new Date();
+    let startTime = new Date(); 
+    job["startedAt"] = startTime;
     if (job.language === "java") {
       output = await executeJava(job.filepath);
     } else if (job.language === "py") {
@@ -29,11 +31,25 @@ jobQueue.process(NUM_WORKS, async ({ data }) => {
       console.log("js here");
       output = await executeJS(job.filepath);
       console.log("output ", output);
+    } else {
+      output = await executeCpp(job.filepath);
+      console.log("Cpp Executed", output);
     }
 
-    job["completedAt"] = new Date();
+    let endTime = new Date(); // Record the end time
+    job["completedAt"] = endTime;
+
+// Calculate the time taken in milliseconds
+    let timeTaken = endTime.getTime() - startTime.getTime();
+
+// Convert milliseconds to seconds for readability
+    
+
+    console.log("Run Time: ", timeTaken, " ms");
+
     job["status"] = "success";
     job["output"] = output;
+    job["TimeComplexity"] = timeTaken;
 
     await job.save();
 

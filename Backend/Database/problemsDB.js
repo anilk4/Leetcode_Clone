@@ -18,20 +18,6 @@ const ProblemSchema = new mongoose.Schema({
   related_topics: String,
 });
 
-const problemSchema = new mongoose.Schema({
-  main: {
-      id: Number,
-      title: String,
-      description: String,
-      difficulty: String,
-      acceptance_rate: Number,
-      companies:String,
-      related_topics:String,
-  },
-  test: Array,
-});
-
-
 const Problems = mongoose.model("Test", ProblemSchema, "Test");
 
 module.exports = {
