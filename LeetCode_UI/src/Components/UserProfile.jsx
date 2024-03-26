@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL, problem_data } from "../config";
+import { Typography } from "@mui/material";
+import LinearProgress from '@mui/material/LinearProgress';
 
 const UserProfile = () => {
     const [profile, setProfile] = useState([]);
@@ -36,20 +38,57 @@ const UserProfile = () => {
     }, []);
 
     return (
-        <div>
-            <h1>You solved total {profile.length}</h1>
-            <ul>
-                {profile.map(id => {
-                    const matchingProblem = problem_data.find(problem => problem.id === id);
-                    return matchingProblem ? (
-                        <div key={id}>
-                            <li>ID: {id}</li>
-                            <li>Title: {matchingProblem.title}</li>
-                            <li>Difficulty: {matchingProblem.difficulty}</li>
-                        </div>
-                    ) : null;
-                })}
-            </ul>
+        <div style={{marginLeft:"10px",marginRight:'10px',marginTop:'8px',border:'1px solid black',borderRadius:'0.5rem'}}>
+            <div style={{display:'flex', justifyContent:'flex-start'}}>
+            <div style={{width:'80px', height:'80px', border:'1px solid black',borderRadius:'0.5rem', marginLeft:"50px",marginTop:'40px', marginBottom:'40px'}}>
+            </div>
+
+            <div>
+                <Typography style={{fontSize:30, marginLeft:'30px', marginTop:'30px'}}>Name</Typography>
+                <div style={{display:'flex'}}>
+                    <Typography style={{fontSize:20,marginLeft:'30px',marginTop:'5px'}}> Rank:</Typography>
+                    <Typography style={{fontSize:20, marginTop:'5px'}}>3</Typography>
+                </div>
+            </div>
+
+
+
+            <div style={{ marginLeft:'90px', marginTop:'20px'}}>
+                <Typography style={{fontSize:25,}}>Solved Problem</Typography>
+                <div style={{display:'flex', paddingLeft:'30px'}}>
+                    <Typography style={{ display:'flex',fontSize:50, marginLeft:'20px'}}>15<Typography style={{marginTop:'40px'}}>/50</Typography></Typography>
+                    
+                </div>
+            </div>
+
+
+
+            <div style={{marginLeft:'30px', padding:'20px', paddingRight:'auto'}}>
+                <div style={{padding:'5px'}}>
+                    <div style={{display:"flex", justifyContent:'space-between'}}>
+                        <Typography style={{color:'green'}}>Easy</Typography>
+                        <Typography>0/13</Typography>
+                    </div>
+                    <LinearProgress style={{width:'250px',background:'gray'}}variant="determinate"  value={0} />
+                </div>
+                <div style={{padding:'5px'}}>
+                    <div style={{display:"flex", justifyContent:'space-between'}}>
+                        <Typography style={{color:'yellow'}}>Medium</Typography>
+                        <Typography>10/27</Typography>
+                    </div>
+                    <LinearProgress style={{width:'250px',background:'gray'}}variant="determinate"  value={20} />
+                </div>
+                <div style={{padding:'5px'}}>
+                    <div style={{display:"flex", justifyContent:'space-between'}}>
+                        <Typography style={{color:'red'}}>Hard</Typography>
+                        <Typography>5/10</Typography>
+                    </div>
+                    <LinearProgress style={{width:'250px',background:'gray'}}variant="determinate"  value={50} />
+                </div>
+            </div>
+
+
+            </div>
         </div>
     );
 };

@@ -10,6 +10,7 @@ function Login(){
     const navigate=useNavigate();
     const userEmail=useRecoilValue(userEmailState);
     const setUser=useSetRecoilState(userState);
+    const [error,setError]=useState(false);
     const [formData,setFormData]=useState({
         name:'',
         email:'',
@@ -25,9 +26,11 @@ function Login(){
             setUser({
                 userEmail:formData.email,
             });
+            setError(false);
             navigate('/');
           })
           .catch(error=>{
+            setError(true);
             console.error('User registration error',error);
           });
     }
@@ -56,6 +59,7 @@ function Login(){
                     <Button variant="contained" style={{marginTop:'10px', width:300 , backgroundColor:"rgb(64, 68, 70)"}} onClick={handleSubmit}>Login</Button>
                     <br></br>
                     <p >Don't have an account? <a style={{color:"#7CB9E8"}} href="/register">Login here</a></p>
+                    {error && <p style={{color:'red'}}>Name and email fields must be filled, and the password must be at least 8 characters long, containing at least one uppercase letter and one special character. </p>}
                 </form>
                 </center>
             </div>

@@ -8,13 +8,18 @@ const { authenticateJwt } = require("../middleware/auth");
 const User = require("../Database/account");
 
 const loginInput=z.object({
-    username:z.string(),
-    password:z.string()
+    username:z.string().email(),
+    password:z.string().min(8, { message: 'Password must be at least 8 characters long' })
+    .regex(/[A-Z]/, { message: 'Password must contain at least one capital letter' })
+    .regex(/[!@#$%^&*(),.?":{}|<>]/, { message: 'Password must contain at least one special character' })
+  
   });
   const signUpInput=z.object({
       name:z.string(),
-      username:z.string(),
-      password:z.string()
+      username:z.string().email(),
+    password:z.string().min(8, { message: 'Password must be at least 8 characters long' })
+    .regex(/[A-Z]/, { message: 'Password must contain at least one capital letter' })
+    .regex(/[!@#$%^&*(),.?":{}|<>]/, { message: 'Password must contain at least one special character' })
   })
 
   app.get("/me", authenticateJwt, async (req, res) => {
@@ -37,22 +42,24 @@ app.get("/profile",authenticateJwt,  async (req, res) => {
   }
   res.json({user})
   console.log(user)
-})
+});
 
   app.post('/signup',async (req,res)=>{
+    // console.log(req.body);
     // console.log(req.body);
     let parsedInput=signUpInput.safeParse(req.body);
     if(!parsedInput.success){
       return res.status(403).json({
-        msg:"Parsing Error"
+        msg:"Invalid Username or Password"
       });
+      
     }
     const username=parsedInput.data.username;
     const password=parsedInput.data.password;
     const name=parsedInput.data.name;
-    const user = await User.findOne({username,password});
+    const user = await User.findOne({username});
     console.log(username+" "+password+" "+name);
-    if (user) {
+    if (user.username) {
       res.status(403).json({ message: 'User already exists' });
     } else {
       const obj={username:username,password:password,name:name};
