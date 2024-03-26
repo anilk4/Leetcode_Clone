@@ -46,6 +46,7 @@ app.get("/profile",authenticateJwt,  async (req, res) => {
 
   app.post('/signup',async (req,res)=>{
     // console.log(req.body);
+    // console.log(req.body);
     let parsedInput=signUpInput.safeParse(req.body);
     if(!parsedInput.success){
       return res.status(403).json({

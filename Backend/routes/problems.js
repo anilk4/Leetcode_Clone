@@ -51,12 +51,14 @@ app.post('/code', authenticateJwt, async (req, res) => {
     if (!user) {
       return res.status(403).json({ msg: 'User does not exist' });
     }
+
     const dataToSend = { username, language, code, problem_id, output };
 
     const response = await axios.post('http://localhost:5000/run', dataToSend);
 
     console.log('Response from backend (b):', response.data);
 
+    
     let updatedUser
     let newUser
 
@@ -88,8 +90,7 @@ app.post('/code', authenticateJwt, async (req, res) => {
             { new: true }
           );
         }
-      } 
-      else {
+      } else {
         // If submission doesn't exist, add a new submission with the language code
         console.log("Problem submission doesn't exist, adding");
         newUser = await User.findOneAndUpdate(
