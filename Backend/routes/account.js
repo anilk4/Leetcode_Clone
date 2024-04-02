@@ -59,7 +59,8 @@ app.get("/profile",authenticateJwt,  async (req, res) => {
     const name=parsedInput.data.name;
     const user = await User.findOne({username});
     console.log(username+" "+password+" "+name);
-    if (user.username) {
+    console.log(user);
+    if (user) {
       res.status(403).json({ message: 'User already exists' });
     } else {
       const obj={username:username,password:password,name:name};
