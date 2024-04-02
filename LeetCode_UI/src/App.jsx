@@ -5,8 +5,7 @@ import { useEffect } from "react";
 import Error from "./Components/Error";
 import Favourites from "./Components/Favourites";
 import Header from "./Components/Header";
-import Footer from "./Components/Footer";
-import Body from "./Components/Body";
+import Body from "./Components/body/Body";
 import NavHeader from "./Components/NavHeader";
 import Display from "./Components/DisplayProblem";
 import Login from "./Components/Login";
@@ -18,6 +17,7 @@ import { RecoilRoot, useSetRecoilState } from "recoil";
 import { BASE_URL } from "./config";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
+import Footer from "./Components/footer/Footer";
 
 
 const LazyProfile = lazy(() => import("./Components/UserProfile"));
